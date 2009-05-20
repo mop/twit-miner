@@ -58,8 +58,8 @@ class TwitterSpawnerTest(TestCase):
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1' },
-            { 'text': 'hate Movie1', 'from_user': 'testuser2' },
+            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
@@ -98,14 +98,14 @@ class TwitterSpawnerMultipleTrackablesTest(TestCase):
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1' },
-            { 'text': 'hate Movie1', 'from_user': 'testuser2' },
+            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'hate Movie1', 'from_user': 'testuser1' },
-            { 'text': 'like Movie1', 'from_user': 'testuser2' },
+            { 'text': 'hate Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'like Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
         twitlib.fetch_data(fetch_class=self.mock_class)
 
@@ -122,20 +122,39 @@ class TwitterSpawnerMultipleTrackablesTest(TestCase):
         review = user2.review_set.all()[0]
         self.assertEqual(review.score, 1)
 
+class TwitterSpawnerLastIDTest(TestCase):
+    def setUp(self):
+        pyfactory.Factory.create('trackable', name='Movie1')
+        self.mock_class = Mock()
+        self.mock_object = self.mock_class.return_value
+        self.mock_object.fetch.return_value = { 'results': [
+            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'like Movie1', 'from_user': 'testuser2', 'id': 5 },
+        ] }
+
+        twitlib.fetch_data(fetch_class=self.mock_class)
+        self.trackable = models.Trackable.objects.get(name='Movie1')
+
+    def test_should_update_last_id(self):
+        self.assertEqual(self.trackable.last_id, 5)
+
+    def test_should_recompute_score(self):
+        self.assertEqual(self.trackable.score, 2)
+
 class TwitterSpawnerNeutralScoresTest(TestCase):
     def setUp(self):
         pyfactory.Factory.create('trackable', name='Movie1')
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1' },
-            { 'text': 'hate Movie1', 'from_user': 'testuser2' },
+            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'neutral Movie1', 'from_user': 'testuser1' },
-            { 'text': 'neutral Movie1', 'from_user': 'testuser2' },
+            { 'text': 'neutral Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': 'neutral Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
         twitlib.fetch_data(fetch_class=self.mock_class)
 

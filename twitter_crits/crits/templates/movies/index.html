@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <script>
+      $(document).ready(function(e) {
+        $('.movies_top .movie_name').each(function(m) {
+          alert($(this));
+        });
+        jQuery.get('http://http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=');
+      });
+    </script>
+<h1>What's being watched on Twitter?</h1>
+<table class="movies_top">
+    {% for movie in movies_top %}
+        {% include 'movies/movie.partial.html' %}
+    {% endfor %}
+</table>
+<table class="movies_normal">
+    {% for movie in movies_normal %}
+        {% include 'movies/movie.partial.html' %}
+    {% endfor %}
+</table>
+{% endblock %}

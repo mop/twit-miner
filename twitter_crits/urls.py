@@ -1,11 +1,20 @@
 from django.conf.urls.defaults import *
 
+import os
+
+CURRENT_DIR = os.path.dirname(__file__)
+MEDIA_DIR   = CURRENT_DIR + '/public/'
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
     # Example:
+    (r'^public/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': MEDIA_DIR, 'show_indexes': True }),
+    (r'^', include('twitter_crits.crits.urls')),
+    # (r'^twitter_crits/', include('twitter_crits.crits.urls')),
     # (r'^twitter_crits/', include('twitter_crits.foo.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 

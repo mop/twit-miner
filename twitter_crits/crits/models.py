@@ -2,6 +2,10 @@ from django.db import models
 
 # Create your models here.
 
+class RankingManager(models.Manager):
+    def get_query_set(self):
+        return super(RankingManager, self).get_query_set().order_by('-score')
+
 class Trackable(models.Model):
     type       = models.CharField(max_length=20)
     name       = models.CharField(max_length=200, unique=True)
@@ -9,11 +13,18 @@ class Trackable(models.Model):
     score      = models.IntegerField()
     last_id    = models.IntegerField()
 
+    objects    = models.Manager()
+    ranking    = RankingManager()
+
     def __unicode__(self):
         return self.name
 
     def recompute_score(self):
         self.score = sum(map(lambda a: a.score, self.review_set.all()))
+
+    @classmethod
+    def ranking_by_type(self, type):
+        return self.ranking.filter(type=type)[0:20]
 
 
 class User(models.Model):

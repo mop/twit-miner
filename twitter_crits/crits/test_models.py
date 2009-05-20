@@ -3,7 +3,6 @@ import models
 import pyfactory
 import crits.test_factories
 import django.db
-
 from datetime import datetime
 from django.test import TestCase
 
@@ -40,6 +39,31 @@ class TrackableTest(TestCase):
             self.fail("This should have been thrown an error")
         except django.db.IntegrityError:
             pass
+
+class TrackableRankingFetchTest(TestCase):
+    def setUp(self):
+        for i in xrange(20):
+            pyfactory.Factory.create(
+                'trackable',
+                score=i,
+                name="Movie{i}".format(i=i)
+            )
+        for i in xrange(20):
+            pyfactory.Factory.create(
+                'trackable',
+                type='book',
+                score=i,
+                name="Book{i}".format(i=i)
+            )
+
+    def test_should_fetch_the_best_20_items_for_given_type(self):
+        self.assertEqual(len(models.Trackable.ranking_by_type('Movie')), 20)
+
+    def test_should_fetch_movie_20(self):
+        rankings = models.Trackable.ranking_by_type('Movie')
+        self.assertEqual(rankings[0].score, 19)
+        self.assertEqual(rankings[0].name, 'Movie19')
+        
 
 class UserTests(TestCase):
     def setUp(self):
