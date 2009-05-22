@@ -1,4 +1,85 @@
 body { 
-    font-family: "MS Trebuchet", Tahoma, Arial, sans;
-    font-size: 80%;
+  font-family: "Trebuchet MS", Tahoma, Arial, sans;
+  color: #333;
+  font-size: 80%;
+  background-color: 078600;
+  margin: 0px;
+  width: 100%;
+}
+
+div#header { 
+  float: left;
+}
+
+div#header h1 {
+  clear: none;
+  float: left;
+}
+
+div#header span {
+  clear: none;
+  float: left;
+
+  position: absolute;
+  margin-left: -200px;
+  margin-top: 90px;
+
+  color: white;
+  font-style: italic;
+  font-size:110%;
+}
+
+div#header img {
+  float: left;
+  margin: auto;
+}
+
+div#doc {
+  width: 700px;
+  margin: auto;
+}
+
+div#content, div#footer {
+  clear: both;
+  float:left;
+
+  background-color: white;
+
+  width: 700px;
+  margin: auto;
+  padding: 10px;
+
+  text-align: justify:
+}
+
+div#content label {
+  margin-left: 5px;
+}
+
+table {
+  margin: 10px;
+  float: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+}
+
+a {
+  text-decoration: none;
+  color: #A6A500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+table td span {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  top: 50%;
+}
+
+span.movie_image {
+  width: 150px;
 }

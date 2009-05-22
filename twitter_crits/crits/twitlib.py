@@ -4,10 +4,33 @@ import urllib2
 import simplejson as json
 import re
 
+from porterstemmer import Stemmer
 from datetime import datetime
 
-PLUS_LIST = [ 'cool', 'awesome', 'like', 'good', 'great', 'enjoy', 'amazing' ]
-MINUS_LIST = [ 'dislike', 'hate', 'sucks', 'don\'t like' ]
+stemmer = Stemmer()
+
+PLUS_LIST = [ 
+    'cool',
+    'awesome',
+    'like',
+    'good',
+    'great',
+    'enjoy',
+    'amazing',
+    'good' 
+]
+
+MINUS_LIST = [ 
+    'dislike',
+    'hate',
+    'sucks',
+    'not like',
+    'don\'t like',
+    'bad' 
+]
+
+PLUS_LIST = map(stemmer, PLUS_LIST)
+MINUS_LIST = map(stemmer, MINUS_LIST)
 
 class TwitterFetcher(object):
     def __init__(self, query_string, since_id=1, fetch_lib=urllib2):
@@ -54,9 +77,10 @@ def update_trackable(trackable, id):
     trackable.save()
 
 def create_data(trackable, results):
+    stemmer = Stemmer()
     for result in results:
         user = find_or_create_user(result['from_user'])
-        create_review(user, trackable, result['text'])
+        create_review(user, trackable, stemmer(result['text'].lower()))
         update_trackable(trackable, result['id'])
 
 def fetch_trackable(trackable, fetch_class=TwitterFetcher):

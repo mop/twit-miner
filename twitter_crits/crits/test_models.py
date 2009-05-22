@@ -57,10 +57,10 @@ class TrackableRankingFetchTest(TestCase):
             )
 
     def test_should_fetch_the_best_20_items_for_given_type(self):
-        self.assertEqual(len(models.Trackable.ranking_by_type('Movie')), 20)
+        self.assertEqual(len(models.Trackable.ranking_by_type('movie')), 20)
 
     def test_should_fetch_movie_20(self):
-        rankings = models.Trackable.ranking_by_type('Movie')
+        rankings = models.Trackable.ranking_by_type('movie')
         self.assertEqual(rankings[0].score, 19)
         self.assertEqual(rankings[0].name, 'Movie19')
         
@@ -84,6 +84,17 @@ class UserTests(TestCase):
     def test_should_save(self):
         self.user.save()
         self.assert_(self.user.id != None)
+
+class UserReviewTests(TestCase):
+    def setUp(self):
+        self.user = pyfactory.Factory.create('user')
+        self.trackable = pyfactory.Factory.create('trackable')
+
+        self.user.review(self.trackable, 1)
+
+    def test_should_create_a_review_with_score_1(self):
+        self.assertEqual(len(models.Review.objects.all()), 1)
+        self.assertEqual(models.Review.objects.all()[0].score, 1)
         
 class ReviewTests(TestCase):
     def setUp(self):

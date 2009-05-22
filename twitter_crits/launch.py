@@ -5,21 +5,23 @@ import crits.models as models
 import crits.trackable_fetcher as trackable_fetcher
 import itertools
 
-import math
+from django.core.cache import cache
 
 from multiprocessing import Pool
 
+FEED_LISTS = [
+    'http://www.imsdb.com/feeds/newreleases.php',
+    'http://www.metacritic.com/rss/movie/film.xml'
+]
 NUM_PROCESSES = 4
 
 # fetch movies...
-fetcher = trackable_fetcher.Fetcher(
-    'http://www.metacritic.com/rss/movie/film.xml'
-)
-fetcher.import_feed()
+for feed in FEED_LISTS:
+    fetcher = trackable_fetcher.Fetcher(feed)
+    fetcher.import_feed()
 
 # search twitter
 trackables    = models.Trackable.objects.all()
-print trackables
 #per_thread    = math.ceil(len(trackables) / float(NUM_PROCESSES))
 #zipped_items  = zip(trackables, itertools.count(0))
 #zipped_items.sort(key=lambda a: a[1] % NUM_PROCESSES)
@@ -33,3 +35,6 @@ results = p.map(twitlib.fetch_trackable, trackables)
 results = zip(results, trackables)
 for result, trackable in results:
     twitlib.create_data(trackable, result['results'])
+
+cache.set('movie_svd', None)
+models.Trackable.recommend('movie', []) # refill cache

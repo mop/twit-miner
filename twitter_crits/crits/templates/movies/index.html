@@ -1,22 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
     <script>
-      $(document).ready(function(e) {
-        $('.movies_top .movie_name').each(function(m) {
-          alert($(this));
+    function fetch_wiki(img) {
+      var title = $(img).next('.movie_name').text();
+      var url = 'http://json-wikisummary.appjet.net/?keyword=';
+      var query = encodeURIComponent(title + ' (film)');
+      url += query + '&callback=?';
+      console.log(url);
+      jQuery.getJSON(url, null, function(e) {
+        console.log(e);
+        if (e.responseStatus != 200) return;
+        $(v).select('img').qtip({
+          content: e.content,
+          style: {
+            tip: true,
+            name: 'cream'
+          }
         });
-        jQuery.get('http://http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=');
       });
+    }
+    $(document).ready(function(e) {
+      $('.movies_top .movie_name').each(function(i, v) {
+        var query = encodeURIComponent($(v).text() + ' movie poster');
+        var url =
+        'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=';
+        url += query + '&callback=?';
+        jQuery.getJSON(url, null, function(e) {
+          if (e.responseStatus != 200) return;
+          var result_url = e.responseData.results[0].tbUrl;
+          $(v).prev('.movie_image').append('<img src="' + result_url + '" />');
+          fetch_wiki($(v).prev('.movie_image'));
+        });
+      });
+    });
     </script>
-<h1>What's being watched on Twitter?</h1>
+<h2>What movies do you like?</h2>
+<form action="{% url movie_recommend %}" method="get">
+  <p>
+  <label for="movie_text">Movies: </label>
+  <span class="input_help">(separated by ',')</span>
+  <input type="text" name="movies" id="movie_text" />
+  <input type="submit" value="Suggest Movies!" />
+  </p>
+</form>
+<h2>What movies do people like on Twitter?</h2>
 <table class="movies_top">
-    {% for movie in movies_top %}
+    {% for movie in movies %}
         {% include 'movies/movie.partial.html' %}
-    {% endfor %}
+        {% ifequal forloop.counter 5 %}
 </table>
 <table class="movies_normal">
-    {% for movie in movies_normal %}
-        {% include 'movies/movie.partial.html' %}
+        {% endifequal %}
     {% endfor %}
 </table>
 {% endblock %}

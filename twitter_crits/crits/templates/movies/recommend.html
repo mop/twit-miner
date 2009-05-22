@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load pyif %}
+{% block content %}
+    {% pyif len(objects) == 0 %}
+        <p>Sorry, we don't have any suggestions for you :(</p>
+    {% else %}
+        <p>You might like one of those movies:</p>
+        <ul>
+        {% for movie in objects %} 
+            <li>{{movie.name}}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

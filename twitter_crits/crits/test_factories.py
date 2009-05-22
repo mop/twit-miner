@@ -7,7 +7,7 @@ class TrackableFactory(pyfactory.FactoryObject):
         name  = 'trackable'
     class Elements:
         name = pyfactory.Generator(lambda i: "Test Movie {num}".format(num=i))
-        type = "Movie"
+        type = "movie"
         score = 10
         last_id = 1
         created_at = datetime.now()
@@ -17,7 +17,7 @@ class UserFactory(pyfactory.FactoryObject):
         klass = 'crits.models.User'
         name  = 'user'
     class Elements:
-        name    = 'User1'
+        name    = pyfactory.Generator(lambda i: "user{num}".format(num=i))
         url     = 'http://twitter.com/user1'
         network = 'twitter'
 

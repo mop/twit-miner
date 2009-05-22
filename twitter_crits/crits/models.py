@@ -1,4 +1,9 @@
 from django.db import models
+import numpy as np
+import numpy.linalg as linalg
+import itertools
+from operator import itemgetter
+from django.core.cache import cache
 
 # Create your models here.
 
@@ -26,12 +31,126 @@ class Trackable(models.Model):
     def ranking_by_type(self, type):
         return self.ranking.filter(type=type)[0:20]
 
+    @classmethod
+    def reviews_to_vector(cls, reviews):
+        tuples = map(lambda a: (a.trackable.id, a.score), reviews)
+        return cls.tuples_to_vector(tuples)
+
+    @classmethod
+    def tuples_to_vector(cls, tuples):
+        num_trackables = Trackable.objects.order_by('-id')[0].id
+
+        result = [0] * num_trackables
+        for id, score in tuples:
+            result[id - 1] = score
+        return result
+
+    @classmethod
+    def vector_for_query(cls, type, objects):
+        trackables = map(
+            lambda a: Trackable.objects.filter(type=type, name__icontains=a),
+            objects
+        )
+        result = []
+        for trackable_list in trackables:
+            for trackable in trackable_list:
+                result.append((trackable.id, 1))
+        return result
+
+    @classmethod
+    def lsi(cls, u, s, v, query_vector):
+        u2  =  u[:, 0:2]
+        v2  =  v[0:2, :].transpose()
+        s2  =  np.matrix([[s[0], 0], [0, s[1]]])
+
+        query_matrix = np.matrix(query_vector)
+        query = query_matrix * u2 * linalg.inv(s2)
+
+        user_sim = zip(cls.compute_distances(query, v2), itertools.count(0))
+        user_sim.sort(key=lambda a: a[0])
+        return user_sim
+
+    @classmethod
+    def compute_distances(cls, vec, matrix):
+        return map(
+            lambda i: cls.cdist(vec, matrix[i,:].transpose()),
+            xrange(matrix.shape[0])
+        )
+
+    @classmethod
+    def cdist(cls, u, v):
+        return np.dot(u, v)[0,0] / (linalg.norm(u) * linalg.norm(v))
+
+    @classmethod
+    def recommend(cls, type, objects):
+        query_vector = cls.tuples_to_vector(
+            cls.vector_for_query(type, objects)
+        )
+        usv_matrix = cache.get('{type}_svd'.format(type=type))
+        if usv_matrix is None:
+            users = User.objects.all()
+            
+            review_lists   = map(
+                lambda a: a.review_set.filter(trackable__type=type),
+                users
+            )
+            review_vectors = map(
+                lambda a: cls.reviews_to_vector(a), review_lists
+            )
+            #       movie1 movie2 ...
+            # user1      0      1
+            # user2      1      0
+            matrix = np.matrix(review_vectors).transpose()
+            #        user1  user2 ...
+            # movie1     0      1
+            # movie2     1      0
+        
+            u, s, v = linalg.svd(matrix)
+            usv_matrix = (u, s, v, matrix)
+            cache.set('{type}_svd'.format(type=type), usv_matrix)
+        u, s, v, matrix = usv_matrix
+        user_sim = cls.lsi(u, s, v, query_vector)
+        print 'user_sim: ', user_sim
+        print 'query_vector: ', query_vector
+        print 'matrix: ', matrix
+        return cls.fetch_trackables(matrix, user_sim, query_vector)
+
+    @classmethod
+    def fetch_trackables(cls, matrix, user_sim, query_vector):
+        result = []
+        print user_sim
+        user_sim = filter(lambda a: a[0] > 0.90, user_sim)
+        for cos, id in user_sim:
+            items = [ i[0] for i in matrix[:,id].tolist() ]
+            for id, i in zip(itertools.count(0), items):
+                if i > 0 and query_vector[id] == 0: result.append(id)
+        results = zip(itertools.count(0), result)
+        results.sort(key=itemgetter(1))
+        results = map(
+            lambda a: list(a[1])[0], 
+            itertools.groupby(results, key=itemgetter(1))
+        )
+        results.sort(key=itemgetter(0)) # restore order
+        results = map(itemgetter(1), results)
+        id_list = map(lambda a: a + 1, result)
+        print id_list
+        return Trackable.objects.filter(id__in=id_list)
+
 
 class User(models.Model):
     name    = models.CharField(max_length = 50)
     url     = models.URLField()
     network = models.CharField(max_length = 50)
     reviews = models.ManyToManyField(Trackable, through='Review')
+
+    def review(self, trackable, score):
+        review = Review.objects.get_or_create(
+            user=self, 
+            trackable=trackable
+        )[0]
+        review.score = score
+        review.save()
+        return review
     
 class Review(models.Model):
     score      = models.IntegerField(default=0)
