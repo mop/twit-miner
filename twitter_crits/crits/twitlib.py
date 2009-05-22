@@ -46,7 +46,7 @@ class TwitterFetcher(object):
             'since_id': self.since_id
         })
         result = self.fetch_lib.urlopen( 
-            'http://search.twitter.com/search.json?{query}'.format(query=str)
+            'http://search.twitter.com/search.json?%s' % str
         ).read()
         return json.loads(result)
 
@@ -62,9 +62,7 @@ class TwitterUserFetcher(object):
             'since_id': self.since_id,
             'count': 1000
         })
-        url = 'http://twitter.com/statuses/user_timeline.json?{query}'.format(
-            query=str
-        )
+        url = 'http://twitter.com/statuses/user_timeline.json?%s' % str
         result = self.fetch_lib.urlopen(url).read()
         return json.loads(result)
 
@@ -72,7 +70,7 @@ def find_or_create_user(name):
     return models.User.objects.get_or_create(
         name=name,
         network='twitter',
-        url="http://twitter.com/{name}".format(name=name)
+        url="http://twitter.com/%s" % name
     )[0]
 
 def get_score(msg):

@@ -86,7 +86,7 @@ class Trackable(models.Model):
         query_vector = cls.tuples_to_vector(
             cls.vector_for_query(type, objects)
         )
-        usv_matrix = cache.get('{type}_svd'.format(type=type))
+        usv_matrix = cache.get('%s_svd' % type)
         if usv_matrix is None:
             users = User.objects.all()
             
@@ -107,7 +107,7 @@ class Trackable(models.Model):
         
             u, s, v = linalg.svd(matrix)
             usv_matrix = (u, s, v, matrix)
-            cache.set('{type}_svd'.format(type=type), usv_matrix, 60*10)
+            cache.set('%s_svd' % type, usv_matrix, 60*10)
         u, s, v, matrix = usv_matrix
         user_sim = cls.lsi(u, s, v, query_vector)
         print 'user_sim: ', user_sim
@@ -160,11 +160,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{user_id} - {trackable_id} - {score}".format(
-            user_id=self.user_id,
-            trackable_id=self.trackable_id,
-            score=self.score
-        )
+        return "%s - %s - %s" % (self.user_id, self.trackable_id, self.score)
 
     class Meta:
         unique_together = ('user', 'trackable',)

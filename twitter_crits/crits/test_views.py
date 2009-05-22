@@ -108,7 +108,7 @@ class WikiFetcherTest(TestCase):
             '<p>A paragraph which should be {}"escaped\'</p>'
 
         self.title  = urllib.quote('Angels & Demons')
-        self.response = self.client.get('/wiki/{0}'.format(self.title))
+        self.response = self.client.get('/wiki/%s' % self.title)
 
     def tearDown(self):
         wiki_fetcher.fetch = self.old_fetcher

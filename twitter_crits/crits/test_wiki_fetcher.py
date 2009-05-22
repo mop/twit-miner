@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 import os
 import wiki_fetcher
 import urllib
@@ -28,9 +30,7 @@ class TestWikiFetcher(TestCase):
 
     def test_should_escape_url_correctly(self):
         args, dict = self.mock.Request.call_args
-        url = 'http://en.wikipedia.org/wiki/{0}'.format(
-            urllib.quote(self.title)
-        )
+        url = 'http://en.wikipedia.org/wiki/%s' % (urllib.quote(self.title))
         self.assertEqual(url, args[0])
 
     def test_should_add_an_user_agent(self):

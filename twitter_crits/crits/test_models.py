@@ -46,14 +46,14 @@ class TrackableRankingFetchTest(TestCase):
             pyfactory.Factory.create(
                 'trackable',
                 score=i,
-                name="Movie{i}".format(i=i)
+                name="Movie%d" % i
             )
         for i in xrange(20):
             pyfactory.Factory.create(
                 'trackable',
                 type='book',
                 score=i,
-                name="Book{i}".format(i=i)
+                name="Book%d" % i
             )
 
     def test_should_fetch_the_best_20_items_for_given_type(self):
