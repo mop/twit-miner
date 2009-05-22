@@ -1,37 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
     <script>
-    function fetch_wiki(img) {
-      var title = $(img).next('.movie_name').text();
-      var url = 'http://json-wikisummary.appjet.net/?keyword=';
-      var query = encodeURIComponent(title + ' (film)');
-      url += query + '&callback=?';
-      console.log(url);
-      jQuery.getJSON(url, null, function(e) {
-        console.log(e);
-        if (e.responseStatus != 200) return;
-        $(v).select('img').qtip({
-          content: e.content,
-          style: {
-            tip: true,
-            name: 'cream'
-          }
-        });
-      });
-    }
     $(document).ready(function(e) {
-      $('.movies_top .movie_name').each(function(i, v) {
-        var query = encodeURIComponent($(v).text() + ' movie poster');
-        var url =
-        'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=';
-        url += query + '&callback=?';
-        jQuery.getJSON(url, null, function(e) {
-          if (e.responseStatus != 200) return;
-          var result_url = e.responseData.results[0].tbUrl;
-          $(v).prev('.movie_image').append('<img src="' + result_url + '" />');
-          fetch_wiki($(v).prev('.movie_image'));
+        $('.movies_top .movie_name').each(function() {
+            var image = $(this).prev('.movie_image');
+            var title = $(this).text();
+            $(image).wikiImagify({name: title});
         });
-      });
     });
     </script>
 <h2>What movies do you like?</h2>

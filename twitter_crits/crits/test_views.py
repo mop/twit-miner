@@ -1,6 +1,9 @@
 import models
 import test_factories
 import pyfactory
+import wiki_fetcher
+import urllib
+import simplejson
 
 from django.test import Client
 from django.test import TestCase
@@ -92,3 +95,36 @@ class MultipleMovieListTest(TestCase):
             ['Testmovie', 'Testmovie2', 'Testmovie3', 'Testmovie4']
         )
 
+class WikiFetcherTest(TestCase):
+    def setUp(self):
+        setup_test_environment()
+
+        self.mock = Mock()
+
+        self.old_fetcher = wiki_fetcher.fetch
+        wiki_fetcher.fetch = self.mock
+
+        self.mock.return_value = \
+            '<p>A paragraph which should be {}"escaped\'</p>'
+
+        self.title  = urllib.quote('Angels & Demons')
+        self.response = self.client.get('/wiki/{0}'.format(self.title))
+
+    def tearDown(self):
+        wiki_fetcher.fetch = self.old_fetcher
+        teardown_test_environment()
+    
+    def test_should_be_successful(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_should_call_wiki_fetcher_with_correct_args(self):
+        args, dict = self.mock.call_args
+        self.assertEqual(args[0], 'Angels & Demons')
+
+    def test_should_escape_response(self):
+        self.assertContains(self.response, "\\\"")
+        
+    def test_should_return_json_response(self):
+        json = simplejson.loads(unicode(self.response.content))
+        self.assertTrue('result' in json)
+        self.assertEqual(json['result'], self.mock())

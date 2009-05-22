@@ -7,8 +7,23 @@
         <p>You might like one of those movies:</p>
         <ul>
         {% for movie in objects %} 
-            <li>{{movie.name}}</li>
+          <li>
+            <div>
+              <span class="movie_image"></span>
+              <span class="movie_name">{{movie.name}}</span>
+            </div>
+          </li>
         {% endfor %}
         </ul>
     {% endif %}
+    <p style="clear:both;padding-top:10px;">
+      <a href="/movies">Back</a>
+    </p>
+    <script type="text/javascript">
+      $('li span.movie_name').each(function() {
+        var title = $(this).text();
+        console.log(title);
+        $(this).prev('.movie_image').wikiImagify({name: title});
+      });
+    </script>
 {% endblock %}

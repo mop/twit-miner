@@ -7,6 +7,15 @@ body {
   width: 100%;
 }
 
+.movie_image a {
+  float: left;
+}
+
+.movie_image img {
+  border: 0px;
+  float: left;
+}
+
 div#header { 
   float: left;
 }
@@ -56,6 +65,10 @@ div#content label {
   margin-left: 5px;
 }
 
+div#content ul {
+  list-style: none;
+}
+
 table {
   margin: 10px;
   float: left;
@@ -78,6 +91,26 @@ table td span {
   position: relative;
   vertical-align: middle;
   top: 50%;
+}
+
+li div {
+  display: inline-table;
+  vertical-align: middle;
+}
+
+li {
+  float: left;
+  clear: both;
+}
+
+li span {
+  display: block;
+  float: left;
+}
+
+li span.movie_name {
+  font-weight: bold;
+  font-size: 120%;
 }
 
 span.movie_image {

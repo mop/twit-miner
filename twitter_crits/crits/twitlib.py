@@ -14,6 +14,7 @@ PLUS_LIST = [
     'awesome',
     'like',
     'good',
+    'love',
     'great',
     'enjoy',
     'amazing',
