@@ -107,7 +107,7 @@ class Trackable(models.Model):
         
             u, s, v = linalg.svd(matrix)
             usv_matrix = (u, s, v, matrix)
-            cache.set('{type}_svd'.format(type=type), usv_matrix)
+            cache.set('{type}_svd'.format(type=type), usv_matrix, 60*10)
         u, s, v, matrix = usv_matrix
         user_sim = cls.lsi(u, s, v, query_vector)
         print 'user_sim: ', user_sim
@@ -142,6 +142,7 @@ class User(models.Model):
     url     = models.URLField()
     network = models.CharField(max_length = 50)
     reviews = models.ManyToManyField(Trackable, through='Review')
+    last_id = models.IntegerField(default=1)
 
     def review(self, trackable, score):
         review = Review.objects.get_or_create(

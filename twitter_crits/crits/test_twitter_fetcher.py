@@ -17,6 +17,13 @@ TWITTER_TEST_DATA = '''
 ] }
 '''
 
+TWITTER_USER_TEST_DATA = '''
+[{"created_at":"Fri May 22 10:45:21 +0000 2009","in_reply_to_status_id":null,"user":{"created_at":"Mon May 11 11:41:01 +0000 2009","profile_text_color":"333333","description":"LegendaryBadass is the chosen one","profile_background_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_background_images\/12393820\/Resident-Evil-5-Sucks-Final.jpg","utc_offset":-21600,"profile_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_images\/206741620\/n1538191362_30086999_3561275_normal.jpg","time_zone":"Central Time (US & Canada)","profile_link_color":"0084B4","profile_background_tile":true,"screen_name":"jgibbies2","profile_background_color":"9AE4E8","url":"http:\/\/www.youtube.com\/user\/LegendaryBadass","name":"Joanna","favourites_count":0,"protected":false,"notifications":null,"statuses_count":1965,"profile_sidebar_fill_color":"DDFFCC","following":null,"profile_sidebar_border_color":"BDDCAD","followers_count":162,"location":"","id":39235043,"friends_count":66},"truncated":false,"in_reply_to_user_id":null,"text":"Sweet video review for Terminator Salvation: http:\/\/bit.ly\/2Ma41R","favorited":false,"id":1881146749,"in_reply_to_screen_name":null,"source":"web"},
+{"favorited":false,"user":{"profile_sidebar_border_color":"BDDCAD","followers_count":162,"description":"LegendaryBadass is the chosen one","utc_offset":-21600,"friends_count":66,"created_at":"Mon May 11 11:41:01 +0000 2009","profile_text_color":"333333","profile_background_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_background_images\/12393820\/Resident-Evil-5-Sucks-Final.jpg","url":"http:\/\/www.youtube.com\/user\/LegendaryBadass","profile_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_images\/206741620\/n1538191362_30086999_3561275_normal.jpg","name":"Joanna","time_zone":"Central Time (US & Canada)","profile_link_color":"0084B4","protected":false,"profile_background_tile":true,"screen_name":"jgibbies2","following":null,"profile_background_color":"9AE4E8","favourites_count":0,"notifications":null,"statuses_count":1964,"profile_sidebar_fill_color":"DDFFCC","location":"","id":39235043},"in_reply_to_screen_name":null,"created_at":"Fri May 22 10:44:54 +0000 2009","in_reply_to_status_id":null,"text":"Great video review for Star Trek right here: http:\/\/bit.ly\/VENqf","truncated":false,"in_reply_to_user_id":null,"id":1881144259,"source":"web"},
+{"created_at":"Fri May 22 10:43:57 +0000 2009","in_reply_to_status_id":null,"user":{"created_at":"Mon May 11 11:41:01 +0000 2009","profile_text_color":"333333","description":"LegendaryBadass is the chosen one","profile_background_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_background_images\/12393820\/Resident-Evil-5-Sucks-Final.jpg","utc_offset":-21600,"profile_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_images\/206741620\/n1538191362_30086999_3561275_normal.jpg","time_zone":"Central Time (US & Canada)","profile_link_color":"0084B4","profile_background_tile":true,"screen_name":"jgibbies2","profile_background_color":"9AE4E8","url":"http:\/\/www.youtube.com\/user\/LegendaryBadass","name":"Joanna","favourites_count":0,"protected":false,"notifications":false,"statuses_count":1963,"profile_sidebar_fill_color":"DDFFCC","following":false,"profile_sidebar_border_color":"BDDCAD","followers_count":162,"location":"","id":39235043,"friends_count":66},"truncated":false,"in_reply_to_user_id":null,"text":"Sweet video review for Terminator Salvation: http:\/\/bit.ly\/2Ma41R","favorited":false,"id":1881139425,"in_reply_to_screen_name":null,"source":"web"},
+{"created_at":"Fri May 22 10:43:27 +0000 2009","in_reply_to_status_id":null,"user":{"created_at":"Mon May 11 11:41:01 +0000 2009","profile_text_color":"333333","description":"LegendaryBadass is the chosen one","profile_background_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_background_images\/12393820\/Resident-Evil-5-Sucks-Final.jpg","utc_offset":-21600,"profile_image_url":"http:\/\/s3.amazonaws.com\/twitter_production\/profile_images\/206741620\/n1538191362_30086999_3561275_normal.jpg","time_zone":"Central Time (US & Canada)","profile_link_color":"0084B4","profile_background_tile":true,"screen_name":"jgibbies2","profile_background_color":"9AE4E8","url":"http:\/\/www.youtube.com\/user\/LegendaryBadass","name":"Joanna","favourites_count":0,"protected":false,"notifications":null,"statuses_count":1962,"profile_sidebar_fill_color":"DDFFCC","following":null,"profile_sidebar_border_color":"BDDCAD","followers_count":162,"location":"","id":39235043,"friends_count":66},"truncated":false,"in_reply_to_user_id":null,"text":"Great video review for Star Trek right here: http:\/\/bit.ly\/VENqf","favorited":false,"id":1881136907,"in_reply_to_screen_name":null,"source":"web"}]
+'''
+
 def urllib_mock(url, result):
     lib = Mock()
     response = lib.urlopen.return_value
@@ -166,4 +173,96 @@ class TwitterSpawnerNeutralScoresTest(TestCase):
     def test_should_have_a_negative_score_for_testuser2_review(self):
         user2 = models.User.objects.get(name='testuser2')
         review = user2.review_set.all()[0]
+        self.assertEqual(review.score, -1)
+
+class TwitterFetchUserTest(TestCase):
+    def setUp(self):
+        pyfactory.Factory.create('trackable', name='Movie1')
+        self.user = pyfactory.Factory.create('user')
+
+        self.mock_class = Mock()
+        self.mock_object = self.mock_class.return_value
+        self.mock_object.fetch.return_value = [
+            { 'text': 'like Movie1', 'id': 2 },
+            { 'text': 'hate Movie1', 'id': 2 },
+        ]
+
+        self.result = twitlib.fetch_user(
+            self.user,
+            fetch_class=self.mock_class
+        )
+
+    def test_should_pass_user_name(self):
+        args, opts = self.mock_class.call_args
+        self.assertEqual(args[0], self.user.name)
+   
+    def test_should_pass_since_id(self):
+        args, opts = self.mock_class.call_args
+        self.assertEqual(opts['since_id'], self.user.last_id)
+
+    def test_should_call_fetch(self):
+        self.assertTrue(self.mock_object.fetch)
+
+    def test_should_return_the_correct_results(self):
+        self.assertEqual(len(self.result), 2)
+        self.assertEqual(self.result[0]['text'], 'like Movie1')
+        self.assertEqual(self.result[1]['text'], 'hate Movie1')
+
+class TwitterUserFetcherTest(TestCase):
+    def setUp(self):
+        self.user = pyfactory.Factory.create('user')
+        self.mock = urllib_mock(
+            'http://twitter.com/statuses/user_timeline.json?screen_name=' +\
+            self.user.name + '&since_id=1&count=1000',
+            TWITTER_USER_TEST_DATA
+        )
+        self.fetcher = twitlib.TwitterUserFetcher(
+            self.user.name,
+            since_id=1,
+            fetch_lib=self.mock)
+        self.result = self.fetcher.fetch()
+
+    def test_should_call_urlopen_with_correct_url(self):
+        url = 'http://twitter.com/statuses/user_timeline.json?' +\
+            'count=1000&screen_name=' + self.user.name + '&since_id=1'
+        self.assertTrue(any(map(lambda b: b[1][0] == url,
+            filter(lambda a: a[0] == 'urlopen', self.mock.method_calls)
+        )))
+
+    def test_should_return_the_correct_result(self):
+        self.assertEqual(len(self.result), 4)
+
+class TwitterFetchUserUpdaterTest(TestCase):
+    def setUp(self):
+        self.user       = pyfactory.Factory.create('user')
+        self.trackable1 = pyfactory.Factory.create('trackable', name='Movie1')
+        self.trackable2 = pyfactory.Factory.create('trackable', name='Movie2')
+        self.trackable3 = pyfactory.Factory.create('trackable', name='Movie3')
+
+        self.mock_class = Mock()
+        self.mock_object = self.mock_class.return_value
+        self.mock_object.fetch.return_value = [
+            { 'text': u'like Movie1', 'id': 2 },
+            { 'text': u'like Movie2', 'id': 8 },
+            { 'text': u'hate Movie3', 'id': 5 },
+        ]
+
+        twitlib.fetch_user_data(fetch_class=self.mock_class)
+
+    def test_should_create_review_for_movies(self):
+        self.assertEqual(len(self.user.review_set.all()), 3)
+
+    def test_should_create_update_last_id_on_user(self):
+        self.assertEqual(models.User.objects.get(id=self.user.id).last_id, 8)
+
+    def test_should_create_review_for_movie1(self):
+        review = self.user.review_set.get(trackable=self.trackable1)
+        self.assertEqual(review.score, 1)
+
+    def test_should_create_review_for_movie2(self):
+        review = self.user.review_set.get(trackable=self.trackable2)
+        self.assertEqual(review.score, 1)
+
+    def test_should_create_review_for_movie3(self):
+        review = self.user.review_set.get(trackable=self.trackable3)
         self.assertEqual(review.score, -1)

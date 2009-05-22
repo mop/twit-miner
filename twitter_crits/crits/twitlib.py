@@ -6,6 +6,7 @@ import re
 
 from porterstemmer import Stemmer
 from datetime import datetime
+from itertools import count
 
 stemmer = Stemmer()
 
@@ -47,6 +48,24 @@ class TwitterFetcher(object):
         result = self.fetch_lib.urlopen( 
             'http://search.twitter.com/search.json?{query}'.format(query=str)
         ).read()
+        return json.loads(result)
+
+class TwitterUserFetcher(object):
+    def __init__(self, user, since_id=1, fetch_lib=urllib2):
+        self.user = user
+        self.since_id = since_id
+        self.fetch_lib = fetch_lib
+
+    def fetch(self):
+        str = urllib.urlencode({
+            'screen_name': self.user,
+            'since_id': self.since_id,
+            'count': 1000
+        })
+        url = 'http://twitter.com/statuses/user_timeline.json?{query}'.format(
+            query=str
+        )
+        result = self.fetch_lib.urlopen(url).read()
         return json.loads(result)
 
 def find_or_create_user(name):
@@ -92,3 +111,40 @@ def fetch_data(fetch_class=TwitterFetcher):
     for t in models.Trackable.objects.all():
         result = fetch_trackable(t, fetch_class=fetch_class)
         create_data(t, result['results'])
+        
+def fetch_user(user, fetch_class=TwitterUserFetcher):
+    f = fetch_class(user.name, since_id=user.last_id)
+    try:
+        return f.fetch()
+    except Exception, e:
+        print e
+        return []
+
+def find_trackable(trackables, text):
+    stemmer = Stemmer()
+    names = map(lambda a: a.name, trackables)
+    names = map(stemmer, names)
+    names_lists = map(lambda n: n.split(' '), names)
+    results = filter(
+        lambda l: all(map(lambda i: text.find(i) != -1, l[1])), 
+        zip(count(0), names_lists)
+    )
+    if not results: return None
+    return trackables[results[0][0]]
+
+def create_user_data(user, trackables, results):
+    stemmer = Stemmer()
+    for result in results:
+        msg = stemmer(result['text'])
+        trackable = find_trackable(trackables, msg)
+        score = get_score(msg)
+        if not trackable: continue
+        if result['id'] > user.last_id: user.last_id = result['id']
+        user.review(trackable, score)
+    user.save()
+
+def fetch_user_data(fetch_class=TwitterFetcher):
+    trackables = models.Trackable.objects.all()
+    for user in models.User.objects.all():
+        results = fetch_user(user, fetch_class=fetch_class)
+        create_user_data(user, trackables, results)

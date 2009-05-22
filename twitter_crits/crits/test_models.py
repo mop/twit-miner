@@ -81,6 +81,10 @@ class UserTests(TestCase):
         self.assert_(self.user.network != None)
         self.assert_(isinstance(self.user.network, str))
 
+    def test_should_have_a_last_id(self):
+        self.assert_(self.user.last_id != None)
+        self.assert_(self.user.last_id == 1)
+
     def test_should_save(self):
         self.user.save()
         self.assert_(self.user.id != None)
