@@ -9,7 +9,7 @@ from multiprocessing import Pool
 
 NUM_PROCESSES = 4
 
-users      = models.User.objects.order_by('-last_id')[0:80]
+users      = models.User.objects.order_by('last_id')[0:10]
 trackables = models.Trackable.objects.all()
 
 p = Pool(NUM_PROCESSES)
@@ -18,6 +18,10 @@ results = p.map(twitlib.fetch_user, users)
 results = zip(results, users)
 for result, user in results:
     twitlib.create_user_data(user, trackables, result)
+
+for trackable in trackables:
+    trackable.recompute_score()
+    trackable.save()
 
 cache.set('movie_svd', None)
 models.Trackable.recommend('movie', []) # refill cache

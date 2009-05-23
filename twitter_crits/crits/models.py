@@ -145,11 +145,14 @@ class User(models.Model):
     last_id = models.IntegerField(default=1)
 
     def review(self, trackable, score):
-        review = Review.objects.get_or_create(
+        (review, created) = Review.objects.get_or_create(
             user=self, 
             trackable=trackable
-        )[0]
-        review.score = score
+        )
+        if created and score == 0:
+            review.delete()
+            return
+        if score != 0: review.score = score
         review.save()
         return review
     

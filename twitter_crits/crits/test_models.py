@@ -94,11 +94,16 @@ class UserReviewTests(TestCase):
         self.user = pyfactory.Factory.create('user')
         self.trackable = pyfactory.Factory.create('trackable')
 
+    def test_should_create_a_review_with_score_1(self):
         self.user.review(self.trackable, 1)
 
-    def test_should_create_a_review_with_score_1(self):
         self.assertEqual(len(models.Review.objects.all()), 1)
         self.assertEqual(models.Review.objects.all()[0].score, 1)
+
+    def test_shouldnt_create_a_review(self):
+        self.user.review(self.trackable, 0)
+
+        self.assertEqual(len(models.Review.objects.all()), 0)
         
 class ReviewTests(TestCase):
     def setUp(self):

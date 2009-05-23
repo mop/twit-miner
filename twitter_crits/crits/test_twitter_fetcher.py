@@ -131,7 +131,7 @@ class TwitterSpawnerMultipleTrackablesTest(TestCase):
 
 class TwitterSpawnerLastIDTest(TestCase):
     def setUp(self):
-        pyfactory.Factory.create('trackable', name='Movie1')
+        pyfactory.Factory.create('trackable', name='Movie1', score=0)
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
@@ -235,9 +235,15 @@ class TwitterUserFetcherTest(TestCase):
 class TwitterFetchUserUpdaterTest(TestCase):
     def setUp(self):
         self.user       = pyfactory.Factory.create('user')
-        self.trackable1 = pyfactory.Factory.create('trackable', name='Movie1')
-        self.trackable2 = pyfactory.Factory.create('trackable', name='Movie2')
-        self.trackable3 = pyfactory.Factory.create('trackable', name='Movie3')
+        self.trackable1 = pyfactory.Factory.create(
+            'trackable', name='Movie1', score=0
+        )
+        self.trackable2 = pyfactory.Factory.create(
+            'trackable', name='Movie2', score=0
+        )
+        self.trackable3 = pyfactory.Factory.create(
+            'trackable', name='Movie3', score=0
+        )
 
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value

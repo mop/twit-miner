@@ -18,7 +18,7 @@ class MovieIndexListTest(TestCase):
             pyfactory.Factory.create(
                 'trackable',
                 score=i,
-                name='Movie{i}'.format(i=i)
+                name='Movie%d' % i
             )
 
         self.response = self.client.get('/movies/')
@@ -34,13 +34,13 @@ class MovieIndexListTest(TestCase):
 
     def test_should_contain_top_20_movies(self):
         for i in xrange(20, 40):
-            self.assertContains(self.response, 'Movie{i}'.format(i=i))
+            self.assertContains(self.response, 'Movie%d' % i)
 
 class SingleMovieRecommendTest(TestCase):
     def setUp(self):
         setup_test_environment()
 
-        self.movie = pyfactory.Factory.create('trackable')
+        self.movie = pyfactory.Factory.create('trackable', score=0)
 
         self.mock = Mock()
         self.old_recommend = models.Trackable.recommend
@@ -73,7 +73,7 @@ class MultipleMovieListTest(TestCase):
     def setUp(self):
         setup_test_environment()
 
-        self.movie = pyfactory.Factory.create('trackable')
+        self.movie = pyfactory.Factory.create('trackable', score=0)
 
         self.mock = Mock()
         self.old_recommend = models.Trackable.recommend

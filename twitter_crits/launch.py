@@ -28,5 +28,15 @@ results = zip(results, trackables)
 for result, trackable in results:
     twitlib.create_data(trackable, result['results'])
 
+users   = models.User.objects.order_by('last_id')[0:50]
+results = p.map(twitlib.fetch_user, users)
+for result, user in zip(results, users):
+    twitlib.create_user_data(user, trackables, result)
+    
+# prune users
+for user in models.User.objects.all():
+    if user.review_set.count() <= 1:
+        user.delete()
+
 cache.set('movie_svd', None)
 models.Trackable.recommend('movie', []) # refill cache

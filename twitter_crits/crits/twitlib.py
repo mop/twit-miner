@@ -80,26 +80,18 @@ def get_score(msg):
         return 1
     return 0
 
-def create_review(user, trackable, msg):
-    review = models.Review.objects.get_or_create(
-        user=user,
-        trackable=trackable
-    )[0]
-    score = get_score(msg)
-    if score != 0: review.score = score 
-    review.save()
-
-def update_trackable(trackable, id):
+def update_trackable(trackable, id, score):
     trackable.last_id = id if id > trackable.last_id else trackable.last_id
-    trackable.recompute_score()
+    trackable.score += score
     trackable.save()
 
 def create_data(trackable, results):
     stemmer = Stemmer()
     for result in results:
         user = find_or_create_user(result['from_user'])
-        create_review(user, trackable, stemmer(result['text'].lower()))
-        update_trackable(trackable, result['id'])
+        score = get_score(stemmer(result['text'].lower()))
+        user.review(trackable, score)
+        update_trackable(trackable, result['id'], score)
 
 def fetch_trackable(trackable, fetch_class=TwitterFetcher):
     f = fetch_class(trackable.name, since_id=trackable.last_id)
@@ -136,8 +128,9 @@ def create_user_data(user, trackables, results):
         msg = stemmer(result['text'])
         trackable = find_trackable(trackables, msg)
         score = get_score(msg)
-        if not trackable: continue
         if result['id'] > user.last_id: user.last_id = result['id']
+        if not trackable: continue
+        update_trackable(trackable, 0, score)
         user.review(trackable, score)
     user.save()
 
