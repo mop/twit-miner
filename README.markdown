@@ -33,6 +33,7 @@ The tests can be run with [modipyd](http://www.metareal.org/p/modipyd/).
 ## What are the dependencies?
 
 There are a lot of dependencies for running twit-miner:
+
 * [Django 1.0](http://djangoproject.com)
 * [Python >= 2.5](http://python.org)
 * [PyFactory](http://github.com/mop/PyFactory/tree/master)
