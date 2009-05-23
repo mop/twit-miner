@@ -1,4 +1,4 @@
-# Django settings for twitter_crits project.
+# Django settings for twit_miner project.
 import os
 
 DEBUG = True
@@ -69,7 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'twitter_crits.urls'
+ROOT_URLCONF = 'twit_miner.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".

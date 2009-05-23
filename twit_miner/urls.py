@@ -13,9 +13,9 @@ urlpatterns = patterns('',
     # Example:
     (r'^public/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': MEDIA_DIR, 'show_indexes': True }),
-    (r'^', include('twitter_crits.crits.urls')),
-    # (r'^twitter_crits/', include('twitter_crits.crits.urls')),
-    # (r'^twitter_crits/', include('twitter_crits.foo.urls')),
+    (r'^', include('twit_miner.crits.urls')),
+    # (r'^twit_miner/', include('twit_miner.crits.urls')),
+    # (r'^twit_miner/', include('twit_miner.foo.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
