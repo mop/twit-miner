@@ -34,13 +34,13 @@ The tests can be run with [modipyd](http://www.metareal.org/p/modipyd/).
 
 There are a lot of dependencies for running twit-miner:
 
-* [Django 1.0](http://djangoproject.com)
-* [Python >= 2.5](http://python.org)
-* [PyFactory](http://github.com/mop/PyFactory/tree/master)
-* [NumPy](http://numpy.scipy.org/)
-* [PorterStemmer](http://bitbucket.org/methane/porterstemmer/)
-* [modipyd](http://www.metareal.org/p/modipyd/)
-* [simplejson](http://pypi.python.org/pypi/simplejson/)
-* [multiprocessing](http://code.google.com/p/python-multiprocessing/) Only needed if you are running on Python 2.5, since 2.6 has it already included.
-* [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
-* [feedparser](http://www.feedparser.org/)
+    * [Django 1.0](http://djangoproject.com)
+    * [Python >= 2.5](http://python.org)
+    * [PyFactory](http://github.com/mop/PyFactory/tree/master)
+    * [NumPy](http://numpy.scipy.org/)
+    * [PorterStemmer](http://bitbucket.org/methane/porterstemmer/)
+    * [modipyd](http://www.metareal.org/p/modipyd/)
+    * [simplejson](http://pypi.python.org/pypi/simplejson/)
+    * [multiprocessing](http://code.google.com/p/python-multiprocessing/) Only needed if you are running on Python 2.5, since 2.6 has it already included.
+    * [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
+    * [feedparser](http://www.feedparser.org/)
