@@ -65,8 +65,8 @@ class TwitterSpawnerTest(TestCase):
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
-            { 'text': 'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
+            { 'text': u'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': u'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
@@ -105,14 +105,14 @@ class TwitterSpawnerMultipleTrackablesTest(TestCase):
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
-            { 'text': 'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
+            { 'text': u'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': u'hate Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'hate Movie1', 'from_user': 'testuser1', 'id': 2 },
-            { 'text': 'like Movie1', 'from_user': 'testuser2', 'id': 2 },
+            { 'text': u'hate Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': u'like Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
         twitlib.fetch_data(fetch_class=self.mock_class)
 
@@ -135,8 +135,8 @@ class TwitterSpawnerLastIDTest(TestCase):
         self.mock_class = Mock()
         self.mock_object = self.mock_class.return_value
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'like Movie1', 'from_user': 'testuser1', 'id': 2 },
-            { 'text': 'like Movie1', 'from_user': 'testuser2', 'id': 5 },
+            { 'text': u'like Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': u'like Movie1', 'from_user': 'testuser2', 'id': 5 },
         ] }
 
         twitlib.fetch_data(fetch_class=self.mock_class)
@@ -160,8 +160,8 @@ class TwitterSpawnerNeutralScoresTest(TestCase):
 
         twitlib.fetch_data(fetch_class=self.mock_class)
         self.mock_object.fetch.return_value = { 'results': [
-            { 'text': 'neutral Movie1', 'from_user': 'testuser1', 'id': 2 },
-            { 'text': 'neutral Movie1', 'from_user': 'testuser2', 'id': 2 },
+            { 'text': u'neutral Movie1', 'from_user': 'testuser1', 'id': 2 },
+            { 'text': u'neutral Movie1', 'from_user': 'testuser2', 'id': 2 },
         ] }
         twitlib.fetch_data(fetch_class=self.mock_class)
 
@@ -272,3 +272,55 @@ class TwitterFetchUserUpdaterTest(TestCase):
     def test_should_create_review_for_movie3(self):
         review = self.user.review_set.get(trackable=self.trackable3)
         self.assertEqual(review.score, -1)
+
+class MovieStringTester(TestCase):
+    def setUp(self):
+        pass
+
+    def test_should_detect_valid_mentions(self):
+        self.assertTrue(
+            twitlib.contains_movie('hello some rocks', 'some')
+        )
+
+    def test_should_ignore_postfix_words(self):
+        self.assertFalse(
+            twitlib.contains_movie('hello something rocks', 'some')
+        )
+
+    def test_should_ignore_prefix_words(self):
+        self.assertFalse(
+            twitlib.contains_movie('hello something rocks', 'thing')
+        )
+
+    def test_should_have_no_problems_with_tweet_endings(self):
+        self.assertTrue(
+            twitlib.contains_movie('hello thing', 'thing')
+        )
+    
+    def test_should_have_no_problems_with_tweet_beginnings(self):
+        self.assertTrue(
+            twitlib.contains_movie('thing', 'thing')
+        )
+
+    def test_should_work_with_concatenated_movie_titles(self):
+        self.assertTrue(
+            twitlib.contains_movie('foo is bar great', 'foo bar')
+        )
+
+    def test_should_work_with_concatenated_movie_titles_and_signs(self):
+        self.assertTrue(
+            twitlib.contains_movie('foo is bar great.', 'foo bar')
+        )
+
+    def test_should_fail_with_concatenated_infix_words(self):
+        self.assertFalse(
+            twitlib.contains_movie('foois bar great.', 'foo bar')
+        )
+        self.assertFalse(
+            twitlib.contains_movie('foobar great.', 'foo bar')
+        )
+    
+    def test_should_have_no_problems_with_digits(self):
+        self.assertTrue(
+            twitlib.contains_movie('like movie1', 'movie1')
+        )

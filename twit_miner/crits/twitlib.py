@@ -31,6 +31,8 @@ MINUS_LIST = [
     'bad' 
 ]
 
+CHECK_WORD = re.compile(r'^([\w\d\-_]+?)[\.\?\!,\-]?( |$)')
+
 PLUS_LIST = map(stemmer, PLUS_LIST)
 MINUS_LIST = map(stemmer, MINUS_LIST)
 
@@ -110,17 +112,33 @@ def fetch_user(user, fetch_class=TwitterUserFetcher):
         print e
         return []
 
-def find_trackable(trackables, text):
+def contains_movie(text, movie_name):
     stemmer = Stemmer()
-    names = map(lambda a: a.name, trackables)
-    names = map(stemmer, names)
-    names_lists = map(lambda n: n.split(' '), names)
-    results = filter(
-        lambda l: all(map(lambda i: text.find(i) != -1, l[1])), 
-        zip(count(0), names_lists)
-    )
+    stemmed_text  = stemmer(text.lower())
+    stemmed_movie = stemmer(movie_name.lower())
+    names_list = movie_name.split(' ')
+    positions  = map(lambda i: text.find(i), names_list)
+
+    if any(map(lambda i: i == -1, positions)): return False
+    sub_strings = map(lambda i: text[i:], positions)
+
+    if any(map(
+        lambda i: i != 0 and 
+                  re.match(r'[\w]', text[i - 1]) is not None, positions
+        )): return False
+
+    # more sophisticated tests
+    contains_full_words = map(lambda a: CHECK_WORD.match(a), sub_strings)
+    if any(map(lambda i: i is None, contains_full_words)): return False
+
+    sub_matches = map(lambda a: a.groups()[0], contains_full_words)
+    if any(map(lambda a: a not in names_list, sub_matches)): return False
+    return True
+
+def find_trackable(trackables, text):
+    results = filter(lambda t: contains_movie(text, t.name), trackables)
     if not results: return None
-    return trackables[results[0][0]]
+    return results[0]
 
 def create_user_data(user, trackables, results):
     stemmer = Stemmer()
