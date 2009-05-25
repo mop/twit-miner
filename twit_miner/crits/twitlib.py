@@ -90,6 +90,8 @@ def update_trackable(trackable, id, score):
 def create_data(trackable, results):
     stemmer = Stemmer()
     for result in results:
+        if not contains_movie(result['text'], trackable.name):
+            continue
         user = find_or_create_user(result['from_user'])
         score = get_score(stemmer(result['text'].lower()))
         user.review(trackable, score)

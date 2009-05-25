@@ -96,8 +96,8 @@ class TwitterSpawnerTest(TestCase):
     def test_should_create_two_users(self):
         self.assertEqual(len(models.User.objects.all()), 2)
 
-    def test_should_create_four_reviews(self):
-        self.assertEqual(len(models.Review.objects.all()), 4)
+    def test_should_create_two_reviews(self):
+        self.assertEqual(len(models.Review.objects.all()), 2)
 
 class TwitterSpawnerMultipleTrackablesTest(TestCase):
     def setUp(self):
