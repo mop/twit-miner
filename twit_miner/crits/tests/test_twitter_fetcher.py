@@ -1,7 +1,7 @@
 import test
-import twitlib
+import crits.twitlib as twitlib
 import re
-import models
+import crits.models as models
 
 import pyfactory
 import test_factories

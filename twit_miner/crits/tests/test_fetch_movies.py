@@ -1,5 +1,5 @@
-import models
-import trackable_fetcher
+import crits.models as models
+import crits.trackable_fetcher as trackable_fetcher
 
 from django.test import TestCase
 from mock import Mock

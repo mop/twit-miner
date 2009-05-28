@@ -4,7 +4,8 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-CACHE_BACKEND = 'file:///var/tmp/django_cache'
+if 'DJANGO_TESTING' not in os.environ:
+    CACHE_BACKEND = 'file:///var/tmp/django_cache'
 
 ADMINS = (
     ('Nax', 'naxat88@gmail.com'),

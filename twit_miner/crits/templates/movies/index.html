@@ -2,11 +2,11 @@
 {% block content %}
     <script>
     $(document).ready(function(e) {
-        $('.movies_top .movie_name').each(function() {
-            var image = $(this).prev('.movie_image');
-            var title = $(this).text();
-            $(image).wikiImagify({name: title});
-        });
+       $('.movies_top .movie_image').wikiImagify({
+         name: function(elem) {
+           return $(elem).next('.movie_name').text()
+         }
+       })
     });
     </script>
 <h2>What movies do you like?</h2>

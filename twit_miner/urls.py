@@ -12,7 +12,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     (r'^public/(?P<path>.*)$', 'django.views.static.serve', {
-        'document_root': MEDIA_DIR, 'show_indexes': True }),
+        'document_root': MEDIA_DIR, 'show_indexes': True }, 'static'),
     (r'^', include('twit_miner.crits.urls')),
     # (r'^twit_miner/', include('twit_miner.crits.urls')),
     # (r'^twit_miner/', include('twit_miner.foo.urls')),

@@ -1,13 +1,15 @@
-import models
+import crits.models as models
 import test_factories
 import pyfactory
-import wiki_fetcher
+import crits.wiki_fetcher as wiki_fetcher
 import urllib
 import simplejson
 
 from django.test import Client
 from django.test import TestCase
 from django.test.utils import setup_test_environment, teardown_test_environment
+
+from crits.utils import clear_cache
 
 from mock import Mock
 
@@ -97,6 +99,7 @@ class MultipleMovieListTest(TestCase):
 
 class WikiFetcherTest(TestCase):
     def setUp(self):
+        clear_cache()
         setup_test_environment()
 
         self.mock = Mock()
@@ -127,4 +130,44 @@ class WikiFetcherTest(TestCase):
     def test_should_return_json_response(self):
         json = simplejson.loads(unicode(self.response.content))
         self.assertTrue('result' in json)
-        self.assertEqual(json['result'], self.mock())
+        self.assertEqual(json['result'], {'Angels & Demons': self.mock()})
+
+class MultiWikiFetcher(TestCase):
+    def setUp(self):
+        clear_cache()
+        setup_test_environment()
+
+        self.mock = Mock()
+
+        self.old_fetcher = wiki_fetcher.fetch
+        wiki_fetcher.fetch = self.mock
+
+        self.mock.return_value = \
+            '<p>A paragraph which should be {}"escaped\'</p>'
+
+        self.response = self.client.get('/wiki/', {
+            'titles': ['Angels & Demons', 'Another']
+        })
+
+    def assertCalledWith(self, mock, called, times=1):
+        call_args = mock.call_args_list
+        args = map(lambda a: a[0][0], call_args)
+        angels_count = filter(lambda a: a == called, args)
+        self.assertEqual(len(angels_count), times)
+
+    def tearDown(self):
+        wiki_fetcher.fetch = self.old_fetcher
+        teardown_test_environment()
+
+    def test_should_be_successful(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_should_call_wiki_fetcher_twice(self):
+        call_args = self.mock.call_args_list
+        self.assertEqual(len(call_args), 2)
+
+    def test_should_call_wiki_fetcher_with_angels(self):
+        self.assertCalledWith(self.mock, u'Angels & Demons')
+
+    def test_should_call_wiki_fetcher_with_another(self):
+        self.assertCalledWith(self.mock, u'Another')

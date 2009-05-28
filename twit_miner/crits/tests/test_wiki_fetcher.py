@@ -1,7 +1,7 @@
 from __future__ import with_statement
 
 import os
-import wiki_fetcher
+import crits.wiki_fetcher as wiki_fetcher
 import urllib
 
 from django.test import TestCase

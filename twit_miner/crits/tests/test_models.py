@@ -1,7 +1,7 @@
 import test
-import models
+import crits.models as models
 import pyfactory
-import crits.test_factories
+import crits.tests.test_factories
 import django.db
 from datetime import datetime
 from django.test import TestCase

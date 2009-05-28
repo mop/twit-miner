@@ -32,11 +32,6 @@ class Trackable(models.Model):
         return self.ranking.filter(type=type)[0:20]
 
     @classmethod
-    def reviews_to_vector(cls, reviews):
-        tuples = map(lambda a: (a.trackable.id, a.score), reviews)
-        return cls.tuples_to_vector(tuples)
-
-    @classmethod
     def tuples_to_vector(cls, tuples):
         num_trackables = Trackable.objects.order_by('-id')[0].id
 
@@ -82,21 +77,31 @@ class Trackable(models.Model):
         return np.dot(u, v)[0,0] / (linalg.norm(u) * linalg.norm(v))
 
     @classmethod
+    def reviews_for_users(cls):
+        num_trackables = Trackable.objects.order_by('-id')[0].id
+        num_users      = User.objects.order_by('-id')[0].id
+        matrix         = [[0] * num_trackables] * num_users
+        
+        from django.db import connection
+        cur = connection.cursor()
+        result = cur.execute('''
+            select u.id, t.id, r.score
+            from crits_user u
+            inner join crits_review r on (u.id = r.user_id)
+            inner join crits_trackable t on (t.id = r.trackable_id)
+        ''').fetchall()
+        for (uid, tid, score) in result:
+            matrix[uid - 1][tid - 1] = score
+        return matrix
+
+    @classmethod
     def recommend(cls, type, objects):
         query_vector = cls.tuples_to_vector(
             cls.vector_for_query(type, objects)
         )
         usv_matrix = cache.get('%s_svd' % type)
         if usv_matrix is None:
-            users = User.objects.all()
-            
-            review_lists   = map(
-                lambda a: a.review_set.filter(trackable__type=type),
-                users
-            )
-            review_vectors = map(
-                lambda a: cls.reviews_to_vector(a), review_lists
-            )
+            review_vectors = cls.reviews_for_users()
             #       movie1 movie2 ...
             # user1      0      1
             # user2      1      0
@@ -107,7 +112,7 @@ class Trackable(models.Model):
         
             u, s, v = linalg.svd(matrix)
             usv_matrix = (u, s, v, matrix)
-            cache.set('%s_svd' % type, usv_matrix, 60*10)
+            cache.set('%s_svd' % type, usv_matrix, 3600*10)
         u, s, v, matrix = usv_matrix
         user_sim = cls.lsi(u, s, v, query_vector)
         print 'user_sim: ', user_sim
