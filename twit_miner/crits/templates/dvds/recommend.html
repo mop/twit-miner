@@ -17,21 +17,13 @@
         </ul>
     {% endif %}
     <p style="clear:both;padding-top:10px;">
-      <a href="{% url types "movies" %}">Back</a>
+      <a href="{% url types "dvds" %}">Back</a>
     </p>
     <script type="text/javascript">
-    $(document).ready(function(e) {
-       $('li span.movie_image').wikiImagify({
-         name: function(elem) {
-           return $(elem).next('.movie_name').text()
-         },
-         wiki_title: function(title) {
-           return title + ' (film)';
-         },
-         google_query: function(title) {
-           return title + ' movie poster';
-         }
-       })
-    });
+      $('li span.movie_name').each(function() {
+        var title = $(this).text();
+        console.log(title);
+        $(this).prev('.movie_image').wikiImagify({name: title});
+      });
     </script>
 {% endblock %}

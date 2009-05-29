@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # Example:
     (r'^public/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': MEDIA_DIR, 'show_indexes': True }, 'static'),
+    (r'^admin/(.*)', admin.site.root),
     (r'^', include('twit_miner.crits.urls')),
     # (r'^twit_miner/', include('twit_miner.crits.urls')),
     # (r'^twit_miner/', include('twit_miner.foo.urls')),
@@ -22,5 +23,4 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/(.*)', admin.site.root),
 )

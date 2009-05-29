@@ -13,7 +13,8 @@ def fetch(page, fetch_lib=urllib2):
         content = result.read()
         
         soup = BeautifulSoup(content)
-        par = soup.find('p')
+        div = soup.find(id='bodyContent')
+        par = div.find('p', recursive=False)
         return unicode(par)
     except:
         return u''

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+    <script>
+    $(document).ready(function(e) {
+       $('.anime_top .anime_image').wikiImagify({
+         name: function(elem) {
+           return $(elem).next('.anime_name').text()
+         },
+         google_query: function(title) {
+           return title + ' site:myanimelist.net';
+         }
+       })
+    });
+    </script>
+<h2>What animes do you like?</h2>
+<form action="{% url types_recommend "animes" %}" method="get">
+  <p>
+  <label for="anime_text">Animes: </label>
+  <span class="input_help">(separated by ',')</span>
+  <input type="text" name="animes" id="anime_text" />
+  <input type="submit" value="Suggest Movies!" />
+  </p>
+</form>
+<h2>What animes do people like on Twitter?</h2>
+<table class="anime_top">
+    {% for anime in animes %}
+        {% include 'animes/anime.partial.html' %}
+        {% ifequal forloop.counter 5 %}
+</table>
+<table class="anime_normal">
+        {% endifequal %}
+    {% endfor %}
+</table>
+{% endblock %}

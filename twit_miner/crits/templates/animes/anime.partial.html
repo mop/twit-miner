@@ -1,0 +1,12 @@
+{% load pyif %}
+<tr>
+    <td>
+      <div>
+        {% pyif forloop['counter'] <= 5 %}
+        <span class="anime_image" ></span>
+        {% endif %}
+        <span class="anime_name">{{anime.name}}</span>
+        <span class="anime_score"> - {{anime.score}}</span>
+      </div>
+    </td>
+</tr>

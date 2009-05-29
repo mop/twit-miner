@@ -16,6 +16,15 @@ body {
   float: left;
 }
 
+.anime_image a {
+  float: left;
+}
+
+.anime_image img {
+  border: 0px;
+  float: left;
+}
+
 div#header { 
   float: left;
 }
@@ -117,3 +126,13 @@ li span.movie_name {
 span.movie_image {
   width: 150px;
 }
+
+li span.anime_name {
+  font-weight: bold;
+  font-size: 120%;
+}
+
+span.anime_image {
+  width: 150px;
+}
+

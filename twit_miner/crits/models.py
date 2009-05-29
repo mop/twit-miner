@@ -77,10 +77,10 @@ class Trackable(models.Model):
         return np.dot(u, v)[0,0] / (linalg.norm(u) * linalg.norm(v))
 
     @classmethod
-    def reviews_for_users(cls):
+    def reviews_for_users(cls, type):
         num_trackables = Trackable.objects.order_by('-id')[0].id
         num_users      = User.objects.order_by('-id')[0].id
-        matrix         = [[0] * num_trackables] * num_users
+        matrix         = map(lambda a: [0] * num_trackables, xrange(num_users))
         
         from django.db import connection
         cur = connection.cursor()
@@ -89,7 +89,8 @@ class Trackable(models.Model):
             from crits_user u
             inner join crits_review r on (u.id = r.user_id)
             inner join crits_trackable t on (t.id = r.trackable_id)
-        ''').fetchall()
+            where t.type = %s
+        ''', [type]).fetchall()
         for (uid, tid, score) in result:
             matrix[uid - 1][tid - 1] = score
         return matrix
@@ -101,7 +102,7 @@ class Trackable(models.Model):
         )
         usv_matrix = cache.get('%s_svd' % type)
         if usv_matrix is None:
-            review_vectors = cls.reviews_for_users()
+            review_vectors = cls.reviews_for_users(type)
             #       movie1 movie2 ...
             # user1      0      1
             # user2      1      0
@@ -115,15 +116,11 @@ class Trackable(models.Model):
             cache.set('%s_svd' % type, usv_matrix, 3600*10)
         u, s, v, matrix = usv_matrix
         user_sim = cls.lsi(u, s, v, query_vector)
-        print 'user_sim: ', user_sim
-        print 'query_vector: ', query_vector
-        print 'matrix: ', matrix
         return cls.fetch_trackables(matrix, user_sim, query_vector)
 
     @classmethod
     def fetch_trackables(cls, matrix, user_sim, query_vector):
         result = []
-        print user_sim
         user_sim = filter(lambda a: a[0] > 0.90, user_sim)
         for cos, id in user_sim:
             items = [ i[0] for i in matrix[:,id].tolist() ]
@@ -138,7 +135,6 @@ class Trackable(models.Model):
         results.sort(key=itemgetter(0)) # restore order
         results = map(itemgetter(1), results)
         id_list = map(lambda a: a + 1, result)
-        print id_list
         return Trackable.objects.filter(id__in=id_list)
 
 

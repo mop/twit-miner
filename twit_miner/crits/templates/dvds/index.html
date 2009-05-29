@@ -5,18 +5,12 @@
        $('.movies_top .movie_image').wikiImagify({
          name: function(elem) {
            return $(elem).next('.movie_name').text()
-         },
-         wiki_title: function(title) {
-           return title + ' (film)';
-         },
-         google_query: function(title) {
-           return title + ' movie poster';
          }
        })
     });
     </script>
 <h2>What movies do you like?</h2>
-<form action="{% url types_recommend "movies" %}" method="get">
+<form action="{% url types_recommend "dvds" %}" method="get">
   <p>
   <label for="movie_text">Movies: </label>
   <span class="input_help">(separated by ',')</span>

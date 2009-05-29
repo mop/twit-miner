@@ -4,6 +4,7 @@ import pyfactory
 import crits.wiki_fetcher as wiki_fetcher
 import urllib
 import simplejson
+import operator
 
 from django.test import Client
 from django.test import TestCase
@@ -96,6 +97,71 @@ class MultipleMovieListTest(TestCase):
             movies, 
             ['Testmovie', 'Testmovie2', 'Testmovie3', 'Testmovie4']
         )
+
+TEST_TYPES = [
+    ('movies', 'movie'), 
+    ('animes', 'anime'),
+    ('music', 'music'),
+    ('dvds', 'dvd')
+]
+class ViewRankingGenericTest(TestCase):
+    def setUp(self):
+        setup_test_environment()
+        self.mock = Mock()
+        self.mock.return_value = []
+        self.old_ranking = models.Trackable.ranking_by_type
+        models.Trackable.ranking_by_type = self.mock
+
+        self.responses = map(
+            lambda a: self.client.get('/%s/' % a[0]),
+            TEST_TYPES
+        )
+        
+    def tearDown(self):
+        models.Trackable.ranking_by_type = self.old_ranking
+        teardown_test_environment()
+
+    def test_should_be_successful(self):
+        self.assertTrue(all(map(
+            lambda a: a.status_code == 200,
+            self.responses
+        )))
+
+    def test_should_call_ranking_by_type_with_correct_args(self):
+        call_args = map(lambda a: a[0][0], self.mock.call_args_list)
+        self.assertEqual(call_args, map(operator.itemgetter(1), TEST_TYPES))
+
+    def test_should_render_correct_templates(self):
+        for response, type in zip(self.responses, TEST_TYPES):
+            self.assertTemplateUsed(response, '%s/index.html' % type[0])
+
+class ViewRecommendGenericTest(TestCase):
+    def setUp(self):
+        setup_test_environment()
+        self.obj = pyfactory.Factory.create('trackable', score=0)
+
+        self.mock = Mock()
+        self.old_recommend = models.Trackable.recommend
+        models.Trackable.recommend = self.mock
+        self.mock.return_value = [self.obj]
+
+        self.responses = map(
+            lambda t: self.client.get('/%s/recommend' % t[0], {
+                t[0]: 'Testmovie, Testmovie2,Testmovie3    , Testmovie4'
+            }), TEST_TYPES
+        )
+
+    def tearDown(self):
+        teardown_test_environment()
+
+    def test_should_call_recommend_with_correct_args(self):
+        for args, type in zip(self.mock.call_args_list, TEST_TYPES):
+            called_type, objects = args[0]
+            self.assertEqual(
+                objects, 
+                ['Testmovie', 'Testmovie2', 'Testmovie3', 'Testmovie4']
+            )
+            self.assertEqual(called_type, type[1])
 
 class WikiFetcherTest(TestCase):
     def setUp(self):

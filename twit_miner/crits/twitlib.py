@@ -36,6 +36,11 @@ CHECK_WORD = re.compile(r'^([\w\d\-_]+?)[\.\?\!,\-]?( |$)')
 PLUS_LIST = map(stemmer, PLUS_LIST)
 MINUS_LIST = map(stemmer, MINUS_LIST)
 
+plus_expr = '(%s)' % '|'.join(PLUS_LIST)
+minus_expr = '(%s)' % '|'.join(MINUS_LIST)
+PLUS_EXPR = re.compile(plus_expr)
+MINUS_EXPR = re.compile(minus_expr)
+
 class TwitterFetcher(object):
     def __init__(self, query_string, since_id=1, fetch_lib=urllib2):
         self.query_string = query_string
@@ -44,11 +49,11 @@ class TwitterFetcher(object):
 
     def fetch(self):
         str = urllib.urlencode({
-            'q': self.query_string,
-            'since_id': self.since_id
+            u'q': self.query_string.encode('utf-8'),
+            u'since_id': self.since_id
         })
         result = self.fetch_lib.urlopen( 
-            'http://search.twitter.com/search.json?%s' % str
+            u'http://search.twitter.com/search.json?%s' % str
         ).read()
         return json.loads(result)
 
@@ -76,10 +81,20 @@ def find_or_create_user(name):
     )[0]
 
 def get_score(msg):
-    if any(map(lambda a: re.search(a, msg), MINUS_LIST)):
+    if MINUS_EXPR.search(msg):
         return -1
-    if any(map(lambda a: re.search(a, msg), PLUS_LIST)):
+    if PLUS_EXPR.search(msg):
         return 1
+    #if any(map(lambda a: a in msg, MINUS_LIST)):
+    #    return -1
+    #if any(map(lambda a: a in msg, PLUS_LIST)):
+    #    return 1
+    #for minus in MINUS_LIST:
+    #    if minus in msg:
+    #        return -1
+    #for plus in PLUS_LIST:
+    #    if plus in msg:
+    #        return 1
     return 0
 
 def update_trackable(trackable, id, score):
@@ -89,8 +104,11 @@ def update_trackable(trackable, id, score):
 
 def create_data(trackable, results):
     stemmer = Stemmer()
+    name = stemmer(trackable.name)
+
     for result in results:
-        if not contains_movie(result['text'], trackable.name):
+        txt = stemmer(result['text'])
+        if not contains_movie(txt, name):
             continue
         user = find_or_create_user(result['from_user'])
         score = get_score(stemmer(result['text'].lower()))
@@ -115,13 +133,10 @@ def fetch_user(user, fetch_class=TwitterUserFetcher):
         return []
 
 def contains_movie(text, movie_name):
-    stemmer = Stemmer()
-    stemmed_text  = stemmer(text.lower())
-    stemmed_movie = stemmer(movie_name.lower())
     names_list = movie_name.split(' ')
-    positions  = map(lambda i: text.find(i), names_list)
-
-    if any(map(lambda i: i == -1, positions)): return False
+    for name in names_list:
+        if name not in text: return False
+    positions = map(text.find, names_list)
     sub_strings = map(lambda i: text[i:], positions)
 
     if any(map(
@@ -138,9 +153,11 @@ def contains_movie(text, movie_name):
     return True
 
 def find_trackable(trackables, text):
-    results = filter(lambda t: contains_movie(text, t.name), trackables)
-    if not results: return None
-    return results[0]
+    stemmer = Stemmer()
+    for trackable in trackables:
+        if contains_movie(text, stemmer(trackable.name)):
+            return trackable
+    return None
 
 def create_user_data(user, trackables, results):
     stemmer = Stemmer()

@@ -1,0 +1,1315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<title>Anime - MyAnimeList.net</title>
+    <meta name="Description" content="Start cataloging anime you've watched or manga you've read. Browse through our extensive anime and manga database. Get anime or manga suggestions, recommendations and reviews. View top rated anime and manga. Create anime and manga favorites. Tons more too!" />
+    <meta name="Keywords" content="anime, animelist, myanimelist, anime list, log anime seen, catalog anime watched, anime reviews, top anime, anime characters, favorite anime, anime discussion, anime information, manga series, manga information, top manga, mangalist, manga list, manga, manga reviews, voice actors, seiyuu" />
+    <meta name="Author" content="Garrett Gyssler">
+	
+		<script type="text/javascript" src="http://cdn.myanimelist.net/js/jquery-compressed.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="http://cdn.myanimelist.net/css/myanimelist.v30.css" />
+		
+		<script type="text/javascript" src="http://cdn.myanimelist.net/js/hover.v3.js"></script>
+		
+	<script type="text/javascript" src="http://cdn.myanimelist.net/js/myanimelist.v8.js"></script>
+	<script type="text/javascript" src="http://cdn.myanimelist.net/thickbox/thickbox.js"></script>
+	<link rel="stylesheet" href="http://cdn.myanimelist.net/thickbox/thickbox.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.myanimelist.net/css/dialog.v1.css" />
+	<link rel="search" type="application/opensearchdescription+xml" href="http://cdn.myanimelist.net/plugins/myanimelist.xml" title="MyAnimeList" />
+	
+<link rel="shortcut icon" href="http://cdn.myanimelist.net/images/faviconv5.ico" />
+	
+</head>
+
+<body onload="search_animeSearchLoad();">
+
+<div id="myanimelist">
+
+<div id="header_surround">
+    <div id="header_right">
+    	
+        <div style="padding-top: 21px; padding-right: 6px;">
+
+        <input type="text" class="inputtext" id="topSearchText" style="width: 220px;" onkeydown="return ts_checkEnter(event);" size="30" /> 
+        <select id="topSearchValue" class="inputtext" onchange="ts_selection();">
+        <option value="0">Anime</option>
+        <option value="1">Manga</option>
+        <option value="2">Characters</option>
+        <option value="6">People</option>
+        <option value="3">Fansub Groups</option>
+        <option value="4">Clubs</option>
+        <option value="5">Users</option>
+        </select> <input type="button" class="inputButton" value="Search" onclick="ts_subSearch(5);" />
+        </form>
+        </div>
+        
+	</div>
+	<div id="header_left"><a href="http://myanimelist.net/" style="display: block; width: 300px; height: 49px;"></a></div>
+</div>
+
+<div id="leftcontent">
+
+	<div id="login">
+	<form name="loginForm" style="display: inline;" action="http://myanimelist.net/login.php" method="post" >
+
+	<div style="margin-bottom: 3px;">
+	
+	<div style="margin-bottom: 2px;">Username:</div>
+	<input type="text" name="username" class="inputtext" size="20">
+	<div style="margin-bottom: 2px; margin-top: 2px;">Password:</div>
+	<input type="password" name="password" class="inputtext" size="20">
+    <div style="margin-top: 2px;"><label><input type="checkbox" name="cookie" value="1"> Stay logged in?</label></div>
+    
+	</div>
+	
+	<input type="submit" name="sublogin" value="Login" class="inputButton">&nbsp;&nbsp;
+	<input type="button" onclick="document.location='http://myanimelist.net/register.php';" name="register" value="Register" class="inputButton">
+	
+	</form>
+	
+	</div>
+		
+	<ul style="padding: 0;">
+	<li><a href="http://myanimelist.net/" class="upperBorder">Home</a></li>
+	<li><a href="http://myanimelist.net/register.php">Register</a></li>
+    <li><a href="http://myanimelist.net/anime.php">Anime</a></li>
+    <li><a href="http://myanimelist.net/manga.php">Manga</a></li>
+    <li><a href="http://myanimelist.net/people.php">People</a></li>
+    <li><a href="http://myanimelist.net/character.php">Characters</a></li>
+    <li><a href="http://myanimelist.net/fansub-groups.php">Fansub Groups</a></li>
+	<li><a href="http://myanimelist.net/topanime.php">Top Anime</a></li>
+    <li><a href="http://myanimelist.net/topmanga.php">Top Manga</a></li>
+	<li><a href="http://myanimelist.net/favorites.php">Top Favorites</a></li>
+	<li><a href="http://myanimelist.net/recommendations.php">Recommendations</a></li>
+	<li><a href="http://myanimelist.net/reviews.php">Reviews</a></li>
+    <li><a href="http://myanimelist.net/news.php">Industry News</a></li>
+    <li><a href="http://myanimelist.net/forum/">Forums</a></li>
+    <li><a href="http://myanimelist.net/clubs.php">Clubs</a></li>
+	<li><a href="http://myanimelist.net/blog.php">Blogs</a></li>
+    <li><a href="http://myanimelist.net/users.php">Users</a></li>
+	</ul>
+		<br>
+	<div id="surround_nav_ad" style="margin-top: 5px;">
+    <div id="adNav"></div>
+    </div>
+    </div>
+<div id="rightbody">
+
+<h1>Anime</h1>
+<div id="rightcontent_nopad">
+	<div id="horiznav_nav" style="text-align: center; margin-top: 8px;">
+			<ul>
+			<li><a href="?sd=15&sm=5&sy=2009&em=0&ed=0&ey=0&o=2&w=&c[]=a&c[]=d&cv=1" >Upcoming</a></li>
+			<li><a href="?o=9&c[]=a&c[]=d&cv=2&w=1" >Just Added</a></li>
+			<li><a  href="?letter=.">#</a></li>
+			<li><a href="?letter=A" >A</a></li>
+			<li><a href="?letter=B" >B</a></li>
+			<li><a href="?letter=C" >C</a></li>
+			<li><a href="?letter=D" >D</a></li>
+			<li><a href="?letter=E" >E</a></li>
+			<li><a href="?letter=F" >F</a></li>
+			<li><a href="?letter=G" >G</a></li>
+			<li><a href="?letter=H" >H</a></li>
+			<li><a href="?letter=I" >I</a></li>
+			<li><a href="?letter=J" >J</a></li>
+			<li><a href="?letter=K" >K</a></li>
+			<li><a href="?letter=L" >L</a></li>
+			<li><a href="?letter=M" >M</a></li>
+			<li><a href="?letter=N" >N</a></li>
+			<li><a href="?letter=O" >O</a></li>
+			<li><a href="?letter=P" >P</a></li>
+			<li><a href="?letter=Q" >Q</a></li>
+			<li><a href="?letter=R" >R</a></li>
+			<li><a href="?letter=S" >S</a></li>
+			<li><a href="?letter=T" >T</a></li>
+			<li><a href="?letter=U" >U</a></li>
+			<li><a href="?letter=V" >V</a></li>
+			<li><a href="?letter=W" >W</a></li>
+			<li><a href="?letter=X" >X</a></li>
+			<li><a href="?letter=Y" >Y</a></li>
+			<li><a href="?letter=Z" >Z</a></li>
+			
+			</ul>
+	</div>
+	<div style="padding: 10px;">
+	
+	<form method="GET" style="display: inline;">
+	<input type="text" name="q" id="q" value="" size="50" class="inputtext" /> 
+	<input type="submit" value="Search Anime" class="inputButton" /> 
+	<a href="javascript:void(0);" onclick="search_showAdvanced();">Advanced Search</a>
+	
+	<div id="advancedSearch" class="spaceit" style="display: none;">
+	
+	<div class="normal_header">Filters</div>
+	<table border="0" width="100%" cellpadding="0" cellspacing="5">
+	<tr>
+		<td width="100">Type</td>
+		<td><select name="type" id="filterByType" class="inputtext"><option value="0">Select type<option value="1" >TV</option><option value="2" >OVA</option><option value="3" >Movie</option><option value="4" >Special</option><option value="5" >ONA</option></select></td>
+	</tr>
+	<tr>
+		<td>Score</td>
+		<td><select name="score" class="inputtext"><option value="0">Select score<option value="10" >(10) Masterpiece<option value="9" >(9) Great<option value="8" >(8) Very Good<option value="7" >(7) Good<option value="6" >(6) Fine<option value="5" >(5) Average<option value="4" >(4) Bad<option value="3" >(3) Very Bad<option value="2" >(2) Horrible<option value="1" >(1) Unwatchable</select></td>
+	</tr>
+	<tr>
+		<td>Status</td>
+		<td><select name="status" class="inputtext"><option value="0">Select status<option value="2" >Finished Airing</option><option value="1" >Currently Airing</option><option value="3" >Not yet aired</option></select></td>
+	</tr>
+	<tr>
+		<td>Tag</td>
+		<td><input type="text" name="tag" class="inputtext" size="20" value=""></td>
+	</tr>
+	<tr>
+		<td>Producer</td>
+		<td><select name="p" class="inputtext">
+		<option value="0">Select producer</option><option value="202" ></option><option value="232" > 07th Expansion</option><option value="252" >4Kids Entertainment</option><option value="171" >A Line</option><option value="56" >A-1 Pictures Inc.</option><option value="179" >A.C.G.T.</option><option value="289" >ACiD FiLM</option><option value="60" >Actas</option><option value="121" >Active</option><option value="181" >Adachi Mitsuru</option><option value="97" >ADV Films</option><option value="182" >Age</option><option value="183" >Agent 21</option><option value="184" >Ai ga areba Daijobu</option><option value="48" >AIC</option><option value="88" >AIC A.S.T.A.</option><option value="83" >AIC Spirits</option><option value="292" >AICPLUS+</option><option value="185" >Aiko</option><option value="186" >Ail</option><option value="30" >Ajia-Do</option><option value="187" >Akahori Satoru</option><option value="19" >Akamatsu Ken</option><option value="188" >Akatsuka Fujio</option><option value="172" >Alchemist</option><option value="173" >Alice Soft</option><option value="194" >ANIK</option><option value="124" >Animac</option><option value="155" >ANIMATE</option><option value="140" >Animax</option><option value="277" >Anime Midstream</option><option value="310" >Animeigo</option><option value="17" >Aniplex</option><option value="77" >APPP</option><option value="297" >Armor</option><option value="38" >ARMS</option><option value="8" >Artland</option><option value="72" >Artmic</option><option value="142" >Asatsu DK</option><option value="242" >Ashi Productions Co. Inc.</option><option value="163" >asread</option><option value="238" >AT-X</option><option value="151" >Atsuya Uki</option><option value="52" >Avex</option><option value="230" >Bandai Co., Ltd.</option><option value="233" >Bandai Entertainment</option><option value="23" >Bandai Visual</option><option value="286" >Bang Zoom! Entertainment</option><option value="271" >Barnum Studio</option><option value="295" >BaseSon</option><option value="59" >Beat Frog</option><option value="5" >Bee Train</option><option value="89" >BeSTACK</option><option value="174" >Blue Impact</option><option value="157" >BMG Japan</option><option value="4" >Bones</option><option value="112" >Brains Base</option><option value="116" >Broccoli</option><option value="214" >BS-i</option><option value="240" >Capcom</option><option value="146" >CBC</option><option value="284" >Central Park Media</option><option value="162" >Character and Anime Dot Com</option><option value="130" >CherryLips</option><option value="290" >Cinema Citrus</option><option value="90" >CIRCUS</option><option value="87" >CLAMP</option><option value="291" >CoMix Wave</option><option value="296" >Critical Mass</option><option value="231" >CyberConnect2</option><option value="164" >d-rights</option><option value="244" >D3</option><option value="278" >Daiei Co. Ltd.</option><option value="228" >Daiwon Media</option><option value="39" >DAUME</option><option value="287" >David Production</option><option value="53" >Dentsu Inc.</option><option value="269" >DiC Entertainment</option><option value="206" >Digital Works</option><option value="51" >Diomedea</option><option value="294" >Discovery</option><option value="276" >DLE Inc.</option><option value="95" >Dogakobo</option><option value="243" >Doumu</option><option value="154" >Easy Film</option><option value="258" >ECHO</option><option value="91" >feel.</option><option value="267" >Five Ways</option><option value="285" >Four Some</option><option value="69" >Front Line</option><option value="61" >Frontier Works</option><option value="169" >Fuji TV</option><option value="102" >FUNimation Entertainment</option><option value="131" >G&G Entertainment</option><option value="6" >Gainax</option><option value="198" >Gakken</option><option value="42" >GDH</option><option value="189" >GEN Productions</option><option value="79" >GENCO</option><option value="31" >Geneon Universal Entertainment</option><option value="282" >Gentosha Comics, Inc.</option><option value="176" >Ginga Ya</option><option value="302" >GODxDOG Production </option><option value="309" >GoHands</option><option value="3" >Gonzo</option><option value="152" >Green Bunny</option><option value="86" >Group TAC</option><option value="148" >Hakunensha</option><option value="34" >Hal Film Maker</option><option value="213" >Half H.P Studio</option><option value="305" >Harmony Gold USA</option><option value="303" >Hasbro</option><option value="138" >Himajin Planning</option><option value="134" >Horipro</option><option value="268" >Hot Bear</option><option value="193" >Idea Factory</option><option value="255" >IMAGI</option><option value="170" >Imagica</option><option value="75" >IMAGIN</option><option value="74" >Inoue Takehiko</option><option value="7" >J.C. Staff</option><option value="222" >Jade Animation</option><option value="257" >Jam</option><option value="262" >Kadokawa Pictures USA</option><option value="113" >Kadokawa Shoten</option><option value="259" >Kaeruotoko Shokai</option><option value="288" >Kaname Production</option><option value="283" >KENMedia</option><option value="66" >Key</option><option value="158" >KIDS STATION</option><option value="99" >Kitty Films</option><option value="159" >Kodansha</option><option value="241" >KOEI</option><option value="275" >Kojiro Shishido Animation Works</option><option value="281" >Kokusai Egaisha</option><option value="85" >Konami</option><option value="50" >KSS</option><option value="20" >Kubo Taito</option><option value="2" >Kyoto Animation</option><option value="301" >Langmaor</option><option value="104" >Lantis</option><option value="40" >m.o.e.</option><option value="11" >Madhouse Studios</option><option value="207" >Magic Bus</option><option value="306" >Magic Capsule</option><option value="143" >Mainichi Broadcasting</option><option value="32" >Manglobe</option><option value="165" >Marubeni</option><option value="82" >Marvelous Entertainment</option><option value="180" >Matsumoto Leiji</option><option value="250" >Media Blasters</option><option value="108" >Media Factory</option><option value="135" >MediaNet</option><option value="71" >Mellow Head</option><option value="25" >Milky Animation Label</option><option value="201" >MMG</option><option value="54" >Mook Animation</option><option value="166" >MOVIC</option><option value="68" >Mushi Production</option><option value="139" >NAS</option><option value="266" >Natural High</option><option value="215" >Nelvana</option><option value="111" >NHK</option><option value="205" >Nihon Ad Systems</option><option value="22" >Nippon Animation</option><option value="115" >Nitro+</option><option value="70" >Nomad</option><option value="270" >NuTech Digital</option><option value="67" >OB Planning</option><option value="234" >Oh! Production</option><option value="28" >Oriental Light and Magic</option><option value="132" >P.A. Works</option><option value="226" >Panmedia</option><option value="293" >Picograph</option><option value="78" >Picture Magic</option><option value="45" >Pink Pineapple</option><option value="125" >Pioneer Entertainment (USA)</option><option value="204" >PIONEER LDC</option><option value="195" >Pixy</option><option value="175" >PLANET</option><option value="107" >Plum</option><option value="156" >Polygram Japan</option><option value="144" >Pony Canyon</option><option value="137" >PPM</option><option value="304" >Primastea</option><option value="10" >Production I.G</option><option value="196" >Production Reed</option><option value="263" >Production Reed Co., Ltd. </option><option value="81" >Radix</option><option value="211" >Rakuonsha</option><option value="190" >RCC Chugoku Broadcasting</option><option value="49" >REMIC</option><option value="253" >Rikuentai</option><option value="249" >Robot</option><option value="160" >Rondo Robe</option><option value="264" >Ruby-Spears Productions </option><option value="261" >San-X</option><option value="150" >Sanrio</option><option value="41" >Satelight</option><option value="98" >Sav! The World Productions</option><option value="167" >Sega</option><option value="35" >Seven Arcs</option><option value="44" >SHAFT</option><option value="168" >Shelty</option><option value="247" >Shin-Ei Animation</option><option value="26" >Shinkai Makoto</option><option value="192" >Shinkuukan</option><option value="133" >Shinyusha</option><option value="235" >Shirogumi Inc.</option><option value="109" >Shochiku</option><option value="62" >Shogakukan Productions</option><option value="260" >Shuuhei Morita</option><option value="129" >Silky`s</option><option value="300" >Silver Link</option><option value="279" >Skouras</option><option value="147" >SKY Perfect Well Think Co., Ltd.</option><option value="149" >SME Visual Works</option><option value="254" >Soft Garage</option><option value="153" >SoftX</option><option value="161" >Sogo Vision</option><option value="209" >Sol Blade</option><option value="15" >Sony Pictures Entertainment</option><option value="64" >Sotsu Agency</option><option value="128" >Souten Studio</option><option value="58" >Square Enix</option><option value="92" >Starchild Records</option><option value="13" >Studio 4°C</option><option value="298" >Studio Anima</option><option value="126" >Studio Comet</option><option value="37" >Studio DEEN</option><option value="24" >Studio Fantasia</option><option value="93" >Studio Flag</option><option value="36" >Studio Gallop</option><option value="21" >Studio Ghibli</option><option value="101" >Studio Hibari</option><option value="117" >Studio Izena</option><option value="280" >Studio Junio</option><option value="197" >Studio Junior</option><option value="272" >Studio Kajino</option><option value="47" >Studio Khara</option><option value="256" >Studio Kikan</option><option value="177" >Studio Kyuuma</option><option value="114" >Studio Matrix</option><option value="199" >Studio Nue</option><option value="299" >Studio Pastoral</option><option value="1" >Studio Pierrot</option><option value="84" >Studio Rikka</option><option value="216" >Studio TRON</option><option value="210" >Studio Tulip</option><option value="14" >Sunrise</option><option value="307" >Sunwoo Entertainment</option><option value="274" >Suzuki Mirano</option><option value="118" >SynergySP</option><option value="46" >T. Nishimura</option><option value="103" >Tatsunoko Productions</option><option value="106" >Tatsuo Shimamura</option><option value="145" >TBS</option><option value="191" >Tele-Cartoon Japan</option><option value="94" >Telekom Animation Film</option><option value="200" >Tezuka Production, Ltd</option><option value="229" >The Answer Studio Co., Ltd.</option><option value="217" >The Right Stuf International</option><option value="273" >Think Corporation</option><option value="208" >Three Fat Samurai</option><option value="248" >Tin House</option><option value="73" >TMS Entertainment</option><option value="120" >TNK</option><option value="18" >Toei Animation</option><option value="141" >Toei Video Co., Ltd</option><option value="245" >Toho Company Ltd.</option><option value="122" >Tokyo Kids</option><option value="65" >Tokyo Movie Shinsha</option><option value="224" >Toshiba EMI</option><option value="57" >Touhouku Shinsha</option><option value="80" >Trans Arts</option><option value="110" >Triangle Staff</option><option value="178" >Trilogy Future Studio</option><option value="63" >Trinet Entertainment</option><option value="55" >TV Asahi</option><option value="100" >TV Osaka</option><option value="16" >TV Tokyo</option><option value="237" >TYPE-MOON</option><option value="43" >ufotable</option><option value="265" >Valkyria</option><option value="29" >VAP</option><option value="136" >Vega Entertainment</option><option value="212" >Venus Vangard</option><option value="123" >Victor Entertainment</option><option value="246" >Visual 80</option><option value="203" >Visual Art`s</option><option value="119" >Viz Media</option><option value="33" >WOWOW</option><option value="27" >XEBEC</option><option value="105" >XEXCS</option><option value="239" >Y.O.U.C</option><option value="308" >Yellow Film</option><option value="127" >Yomiko Advertising, Inc.</option><option value="76" >Yomiuri Telecasting Corporation</option><option value="220" >Youmex</option><option value="236" >YTV</option><option value="96" >Yumeta Company</option><option value="218" >ZEXCS</option></select></td>
+	</tr>
+	<tr>
+		<td>Rated</td>
+		<td><select name="r" class="inputtext">
+		<option value="0">Select rating</option><option value="1" >G - All Ages</option><option value="2" >PG - Children</option><option value="3" >PG-13 - Teens 13 or older</option><option value="4" >R - 17+ (violence & profanity)</option><option value="5" >R+ - Mild Nudity</option><option value="6" >Rx - Hentai</option></select></td>
+	</tr>
+	<tr>
+		<td>Start Date</td>
+		<td><select name="sm" class="inputtext"><option value="0">-</option><option value="1" >1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option><option value="6" >6</option><option value="7" >7</option><option value="8" >8</option><option value="9" >9</option><option value="10" >10</option><option value="11" >11</option><option value="12" >12</option></select>-<select name="sd" class="inputtext"><option value="0">-</option><option value="1" >1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option><option value="6" >6</option><option value="7" >7</option><option value="8" >8</option><option value="9" >9</option><option value="10" >10</option><option value="11" >11</option><option value="12" >12</option><option value="13" >13</option><option value="14" >14</option><option value="15" >15</option><option value="16" >16</option><option value="17" >17</option><option value="18" >18</option><option value="19" >19</option><option value="20" >20</option><option value="21" >21</option><option value="22" >22</option><option value="23" >23</option><option value="24" >24</option><option value="25" >25</option><option value="26" >26</option><option value="27" >27</option><option value="28" >28</option><option value="29" >29</option><option value="30" >30</option><option value="31" >31</option></select>-<select name="sy" class="inputtext"><option value="0">-</option><option value="2010" >2010</option><option value="2009" >2009</option><option value="2008" >2008</option><option value="2007" >2007</option><option value="2006" >2006</option><option value="2005" >2005</option><option value="2004" >2004</option><option value="2003" >2003</option><option value="2002" >2002</option><option value="2001" >2001</option><option value="2000" >2000</option><option value="1999" >1999</option><option value="1998" >1998</option><option value="1997" >1997</option><option value="1996" >1996</option><option value="1995" >1995</option><option value="1994" >1994</option><option value="1993" >1993</option><option value="1992" >1992</option><option value="1991" >1991</option><option value="1990" >1990</option><option value="1989" >1989</option><option value="1988" >1988</option><option value="1987" >1987</option><option value="1986" >1986</option><option value="1985" >1985</option><option value="1984" >1984</option><option value="1983" >1983</option><option value="1982" >1982</option><option value="1981" >1981</option><option value="1980" >1980</option><option value="1979" >1979</option><option value="1978" >1978</option><option value="1977" >1977</option><option value="1976" >1976</option><option value="1975" >1975</option><option value="1974" >1974</option><option value="1973" >1973</option><option value="1972" >1972</option><option value="1971" >1971</option><option value="1970" >1970</option><option value="1969" >1969</option><option value="1968" >1968</option><option value="1967" >1967</option><option value="1966" >1966</option><option value="1965" >1965</option><option value="1964" >1964</option><option value="1963" >1963</option><option value="1962" >1962</option><option value="1961" >1961</option><option value="1960" >1960</option><option value="1959" >1959</option><option value="1958" >1958</option><option value="1957" >1957</option><option value="1956" >1956</option><option value="1955" >1955</option><option value="1954" >1954</option><option value="1953" >1953</option><option value="1952" >1952</option><option value="1951" >1951</option><option value="1950" >1950</option><option value="1949" >1949</option><option value="1948" >1948</option><option value="1947" >1947</option><option value="1946" >1946</option><option value="1945" >1945</option><option value="1944" >1944</option><option value="1943" >1943</option><option value="1942" >1942</option><option value="1941" >1941</option><option value="1940" >1940</option></select> <small>mm-dd-yyyy</small></td>
+	</tr>
+	<tr>
+		<td>End Date</td>
+		<td><select name="em" class="inputtext"><option value="0">-</option><option value="1" >1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option><option value="6" >6</option><option value="7" >7</option><option value="8" >8</option><option value="9" >9</option><option value="10" >10</option><option value="11" >11</option><option value="12" >12</option></select>-<select name="ed" class="inputtext"><option value="0">-</option><option value="1" >1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option><option value="6" >6</option><option value="7" >7</option><option value="8" >8</option><option value="9" >9</option><option value="10" >10</option><option value="11" >11</option><option value="12" >12</option><option value="13" >13</option><option value="14" >14</option><option value="15" >15</option><option value="16" >16</option><option value="17" >17</option><option value="18" >18</option><option value="19" >19</option><option value="20" >20</option><option value="21" >21</option><option value="22" >22</option><option value="23" >23</option><option value="24" >24</option><option value="25" >25</option><option value="26" >26</option><option value="27" >27</option><option value="28" >28</option><option value="29" >29</option><option value="30" >30</option><option value="31" >31</option></select>-<select name="ey" class="inputtext"><option value="0">-</option><option value="2010" >2010</option><option value="2009" >2009</option><option value="2008" >2008</option><option value="2007" >2007</option><option value="2006" >2006</option><option value="2005" >2005</option><option value="2004" >2004</option><option value="2003" >2003</option><option value="2002" >2002</option><option value="2001" >2001</option><option value="2000" >2000</option><option value="1999" >1999</option><option value="1998" >1998</option><option value="1997" >1997</option><option value="1996" >1996</option><option value="1995" >1995</option><option value="1994" >1994</option><option value="1993" >1993</option><option value="1992" >1992</option><option value="1991" >1991</option><option value="1990" >1990</option><option value="1989" >1989</option><option value="1988" >1988</option><option value="1987" >1987</option><option value="1986" >1986</option><option value="1985" >1985</option><option value="1984" >1984</option><option value="1983" >1983</option><option value="1982" >1982</option><option value="1981" >1981</option><option value="1980" >1980</option><option value="1979" >1979</option><option value="1978" >1978</option><option value="1977" >1977</option><option value="1976" >1976</option><option value="1975" >1975</option><option value="1974" >1974</option><option value="1973" >1973</option><option value="1972" >1972</option><option value="1971" >1971</option><option value="1970" >1970</option><option value="1969" >1969</option><option value="1968" >1968</option><option value="1967" >1967</option><option value="1966" >1966</option><option value="1965" >1965</option><option value="1964" >1964</option><option value="1963" >1963</option><option value="1962" >1962</option><option value="1961" >1961</option><option value="1960" >1960</option><option value="1959" >1959</option><option value="1958" >1958</option><option value="1957" >1957</option><option value="1956" >1956</option><option value="1955" >1955</option><option value="1954" >1954</option><option value="1953" >1953</option><option value="1952" >1952</option><option value="1951" >1951</option><option value="1950" >1950</option><option value="1949" >1949</option><option value="1948" >1948</option><option value="1947" >1947</option><option value="1946" >1946</option><option value="1945" >1945</option><option value="1944" >1944</option><option value="1943" >1943</option><option value="1942" >1942</option><option value="1941" >1941</option><option value="1940" >1940</option></select> <small>mm-dd-yyyy</small></td>
+	</tr>
+	<tr>
+		<td valign="top">Columns</td>
+		<td>
+		<select name="c[]" multiple="multiple" size="5" class="inputtext">
+		<option value="a" selected>Type</option>
+		<option value="b" selected>Eps</option>
+		<option value="c" selected>Score</option>
+		<option value="d" >Start Date</option>
+		<option value="e" >End Date</option>
+		<option value="f" >Total Members</option>
+		<option value="g" >Rating</option>
+		</select>
+		</td>
+	</tr>
+	</table>
+	<br />
+	<div class="normal_header">Genre Filter <span style="font-weight: normal"><small><a href="javascript:void(0);" onclick="window.open('info.php?go=genre','infoWindow','menubar=no,scrollbars=yes,status=no,width=300,height=400');">More Info</a></small></span></div>
+	
+	<div class="spaceit_pad"><select name="gx"><option value="0" selected>Include genres selected<option value="1" >Exclude genres selected</select></div>
+	<table border="0" cellpadding="1" cellspacing="0" width="100%" class="space_table">
+	<td><label><input type="Checkbox" name="genre[]" value="1" >Action</label></td><td><label><input type="Checkbox" name="genre[]" value="2" >Adventure</label></td><td><label><input type="Checkbox" name="genre[]" value="3" >Cars</label></td><td><label><input type="Checkbox" name="genre[]" value="4" >Comedy</label></td><td><label><input type="Checkbox" name="genre[]" value="5" >Dementia</label></td><td><label><input type="Checkbox" name="genre[]" value="6" >Demons</label></td><td><label><input type="Checkbox" name="genre[]" value="7" >Mystery</label></td><td><label><input type="Checkbox" name="genre[]" value="8" >Drama</label></td></tr><tr><td><label><input type="Checkbox" name="genre[]" value="9" >Ecchi</label></td><td><label><input type="Checkbox" name="genre[]" value="10" >Fantasy</label></td><td><label><input type="Checkbox" name="genre[]" value="11" >Game</label></td><td><label><input type="Checkbox" name="genre[]" value="12" >Hentai</label></td><td><label><input type="Checkbox" name="genre[]" value="13" >Historical</label></td><td><label><input type="Checkbox" name="genre[]" value="14" >Horror</label></td><td><label><input type="Checkbox" name="genre[]" value="15" >Kids</label></td><td><label><input type="Checkbox" name="genre[]" value="16" >Magic</label></td></tr><tr><td><label><input type="Checkbox" name="genre[]" value="17" >Martial Arts</label></td><td><label><input type="Checkbox" name="genre[]" value="18" >Mecha</label></td><td><label><input type="Checkbox" name="genre[]" value="19" >Music</label></td><td><label><input type="Checkbox" name="genre[]" value="20" >Parody</label></td><td><label><input type="Checkbox" name="genre[]" value="21" >Samurai</label></td><td><label><input type="Checkbox" name="genre[]" value="22" >Romance</label></td><td><label><input type="Checkbox" name="genre[]" value="23" >School</label></td><td><label><input type="Checkbox" name="genre[]" value="24" >Sci-Fi</label></td></tr><tr><td><label><input type="Checkbox" name="genre[]" value="25" >Shoujo</label></td><td><label><input type="Checkbox" name="genre[]" value="26" >Shoujo Ai</label></td><td><label><input type="Checkbox" name="genre[]" value="27" >Shounen</label></td><td><label><input type="Checkbox" name="genre[]" value="28" >Shounen Ai</label></td><td><label><input type="Checkbox" name="genre[]" value="29" >Space</label></td><td><label><input type="Checkbox" name="genre[]" value="30" >Sports</label></td><td><label><input type="Checkbox" name="genre[]" value="31" >Super Power</label></td><td><label><input type="Checkbox" name="genre[]" value="32" >Vampire</label></td></tr><tr><td><label><input type="Checkbox" name="genre[]" value="33" >Yaoi</label></td><td><label><input type="Checkbox" name="genre[]" value="34" >Yuri</label></td><td><label><input type="Checkbox" name="genre[]" value="35" >Harem</label></td><td><label><input type="Checkbox" name="genre[]" value="36" >Slice of Life</label></td><td><label><input type="Checkbox" name="genre[]" value="37" >Supernatural</label></td><td><label><input type="Checkbox" name="genre[]" value="38" >Military</label></td><td><label><input type="Checkbox" name="genre[]" value="39" >Police</label></td><td><label><input type="Checkbox" name="genre[]" value="40" >Psychological</label></td></tr><tr>
+	</table><br />
+	</div>
+	</form>
+	<script language="javascript" type="text/javascript">
+function search_animeSearchLoad()
+{
+	var titleObj = document.getElementById("q");
+	titleObj.focus();
+}
+
+function search_showAdvanced()
+{
+	$("#advancedSearch").toggle();
+}
+</script>
+    <br><br><div class="normal_header" style="font-size: 14px;">What's Being Watched? <span style="font-size: 11px;" class="lightLink">May 28</span></div>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">1</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/269/Bleach" class="hoverinfo_trigger" id="#parea269" rel="#pinfo269"><img src="http://cdn.myanimelist.net/images/anime/8/3552t.jpg" width="50" border="0" hspace="2" alt="Bleach"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea269">
+	<div id="pinfo269" rel="a269" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/269/Bleach" class="hoverinfo_trigger" id="#parea269" rel="#pinfo269"><strong>Bleach</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=269&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 95%">61,574 members</div>
+					<div class="updatesBar" style="width: 100%; ">2,424 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">2</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1735/Naruto:_Shippuuden" class="hoverinfo_trigger" id="#parea1735" rel="#pinfo1735"><img src="http://cdn.myanimelist.net/images/anime/13/11194t.jpg" width="50" border="0" hspace="2" alt="Naruto: Shippuuden"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1735">
+	<div id="pinfo1735" rel="a1735" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1735/Naruto:_Shippuuden" class="hoverinfo_trigger" id="#parea1735" rel="#pinfo1735"><strong>Naruto: Shippuuden</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1735&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 64%">41,625 members</div>
+					<div class="updatesBar" style="width: 67%; ">1,614 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">3</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/21/One_Piece" class="hoverinfo_trigger" id="#parea21" rel="#pinfo21"><img src="http://cdn.myanimelist.net/images/anime/3/6939t.jpg" width="50" border="0" hspace="2" alt="One Piece"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea21">
+	<div id="pinfo21" rel="a21" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/21/One_Piece" class="hoverinfo_trigger" id="#parea21" rel="#pinfo21"><strong>One Piece</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=21&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 43%">27,641 members</div>
+					<div class="updatesBar" style="width: 60%; ">1,455 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">4</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5114/Fullmetal_Alchemist:_Brotherhood" class="hoverinfo_trigger" id="#parea5114" rel="#pinfo5114"><img src="http://cdn.myanimelist.net/images/anime/11/11980t.jpg" width="50" border="0" hspace="2" alt="Fullmetal Alchemist: Brotherhood"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5114">
+	<div id="pinfo5114" rel="a5114" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5114/Fullmetal_Alchemist:_Brotherhood" class="hoverinfo_trigger" id="#parea5114" rel="#pinfo5114"><strong>Fullmetal Alchemist: Brotherhood</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5114&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 34%">22,073 members</div>
+					<div class="updatesBar" style="width: 42%; ">1,010 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">5</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5507/Valkyria_Chronicles" class="hoverinfo_trigger" id="#parea5507" rel="#pinfo5507"><img src="http://cdn.myanimelist.net/images/anime/2/13656t.jpg" width="50" border="0" hspace="2" alt="Valkyria Chronicles"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5507">
+	<div id="pinfo5507" rel="a5507" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5507/Valkyria_Chronicles" class="hoverinfo_trigger" id="#parea5507" rel="#pinfo5507"><strong>Valkyria Chronicles</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5507&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 12%">7,852 members</div>
+					<div class="updatesBar" style="width: 37%; ">906 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">6</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/3588/Soul_Eater" class="hoverinfo_trigger" id="#parea3588" rel="#pinfo3588"><img src="http://cdn.myanimelist.net/images/anime/9/7804t.jpg" width="50" border="0" hspace="2" alt="Soul Eater"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea3588">
+	<div id="pinfo3588" rel="a3588" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/3588/Soul_Eater" class="hoverinfo_trigger" id="#parea3588" rel="#pinfo3588"><strong>Soul Eater</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=3588&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 50%">32,133 members</div>
+					<div class="updatesBar" style="width: 37%; ">906 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">7</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5680/K-ON!" class="hoverinfo_trigger" id="#parea5680" rel="#pinfo5680"><img src="http://cdn.myanimelist.net/images/anime/6/14125t.jpg" width="50" border="0" hspace="2" alt="K-ON!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5680">
+	<div id="pinfo5680" rel="a5680" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5680/K-ON!" class="hoverinfo_trigger" id="#parea5680" rel="#pinfo5680"><strong>K-ON!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5680&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 24%">15,759 members</div>
+					<div class="updatesBar" style="width: 37%; ">899 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">8</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5525/07-Ghost" class="hoverinfo_trigger" id="#parea5525" rel="#pinfo5525"><img src="http://cdn.myanimelist.net/images/anime/9/14115t.jpg" width="50" border="0" hspace="2" alt="07-Ghost"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5525">
+	<div id="pinfo5525" rel="a5525" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5525/07-Ghost" class="hoverinfo_trigger" id="#parea5525" rel="#pinfo5525"><strong>07-Ghost</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5525&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 13%">8,560 members</div>
+					<div class="updatesBar" style="width: 29%; ">700 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">9</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1604/Katekyo_Hitman_Reborn!" class="hoverinfo_trigger" id="#parea1604" rel="#pinfo1604"><img src="http://cdn.myanimelist.net/images/anime/6/6942t.jpg" width="50" border="0" hspace="2" alt="Katekyo Hitman Reborn!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1604">
+	<div id="pinfo1604" rel="a1604" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1604/Katekyo_Hitman_Reborn!" class="hoverinfo_trigger" id="#parea1604" rel="#pinfo1604"><strong>Katekyo Hitman Reborn!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1604&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 20%">12,983 members</div>
+					<div class="updatesBar" style="width: 28%; ">667 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">10</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5630/Higashi_no_Eden" class="hoverinfo_trigger" id="#parea5630" rel="#pinfo5630"><img src="http://cdn.myanimelist.net/images/anime/2/13809t.jpg" width="50" border="0" hspace="2" alt="Higashi no Eden"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5630">
+	<div id="pinfo5630" rel="a5630" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5630/Higashi_no_Eden" class="hoverinfo_trigger" id="#parea5630" rel="#pinfo5630"><strong>Higashi no Eden</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5630&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 18%">11,746 members</div>
+					<div class="updatesBar" style="width: 24%; ">586 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">11</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/918/Gintama" class="hoverinfo_trigger" id="#parea918" rel="#pinfo918"><img src="http://cdn.myanimelist.net/images/anime/2/10038t.jpg" width="50" border="0" hspace="2" alt="Gintama"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea918">
+	<div id="pinfo918" rel="a918" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/918/Gintama" class="hoverinfo_trigger" id="#parea918" rel="#pinfo918"><strong>Gintama</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=918&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 22%">14,013 members</div>
+					<div class="updatesBar" style="width: 24%; ">575 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">12</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5118/The_Melancholy_of_Haruhi-chan_Suzumiya" class="hoverinfo_trigger" id="#parea5118" rel="#pinfo5118"><img src="http://cdn.myanimelist.net/images/anime/7/13300t.jpg" width="50" border="0" hspace="2" alt="The Melancholy of Haruhi-chan Suzumiya"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5118">
+	<div id="pinfo5118" rel="a5118" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5118/The_Melancholy_of_Haruhi-chan_Suzumiya" class="hoverinfo_trigger" id="#parea5118" rel="#pinfo5118"><strong>The Melancholy of Haruhi-chan Suzumiya</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5118&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 12%">7,547 members</div>
+					<div class="updatesBar" style="width: 23%; ">567 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">13</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5150/Hatsukoi_Limited" class="hoverinfo_trigger" id="#parea5150" rel="#pinfo5150"><img src="http://cdn.myanimelist.net/images/anime/9/14826t.jpg" width="50" border="0" hspace="2" alt="Hatsukoi Limited"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5150">
+	<div id="pinfo5150" rel="a5150" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5150/Hatsukoi_Limited" class="hoverinfo_trigger" id="#parea5150" rel="#pinfo5150"><strong>Hatsukoi Limited</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5150&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 9%">5,871 members</div>
+					<div class="updatesBar" style="width: 22%; ">528 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">14</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/2904/Code_Geass_-_Hangyaku_no_Lelouch_R2" class="hoverinfo_trigger" id="#parea2904" rel="#pinfo2904"><img src="http://cdn.myanimelist.net/images/anime/4/9391t.jpg" width="50" border="0" hspace="2" alt="Code Geass - Hangyaku no Lelouch R2"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea2904">
+	<div id="pinfo2904" rel="a2904" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/2904/Code_Geass_-_Hangyaku_no_Lelouch_R2" class="hoverinfo_trigger" id="#parea2904" rel="#pinfo2904"><strong>Code Geass - Hangyaku no Lelouch R2</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=2904&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 59%">38,511 members</div>
+					<div class="updatesBar" style="width: 22%; ">523 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">15</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5060/Hetalia_Axis_Powers" class="hoverinfo_trigger" id="#parea5060" rel="#pinfo5060"><img src="http://cdn.myanimelist.net/images/anime/4/13549t.jpg" width="50" border="0" hspace="2" alt="Hetalia Axis Powers"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5060">
+	<div id="pinfo5060" rel="a5060" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5060/Hetalia_Axis_Powers" class="hoverinfo_trigger" id="#parea5060" rel="#pinfo5060"><strong>Hetalia Axis Powers</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5060&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 11%">7,069 members</div>
+					<div class="updatesBar" style="width: 21%; ">512 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">16</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4224/Toradora!" class="hoverinfo_trigger" id="#parea4224" rel="#pinfo4224"><img src="http://cdn.myanimelist.net/images/anime/11/11293t.jpg" width="50" border="0" hspace="2" alt="Toradora!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4224">
+	<div id="pinfo4224" rel="a4224" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4224/Toradora!" class="hoverinfo_trigger" id="#parea4224" rel="#pinfo4224"><strong>Toradora!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4224&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 40%">26,033 members</div>
+					<div class="updatesBar" style="width: 21%; ">499 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">17</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5530/Pandora_Hearts" class="hoverinfo_trigger" id="#parea5530" rel="#pinfo5530"><img src="http://cdn.myanimelist.net/images/anime/4/14736t.jpg" width="50" border="0" hspace="2" alt="Pandora Hearts"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5530">
+	<div id="pinfo5530" rel="a5530" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5530/Pandora_Hearts" class="hoverinfo_trigger" id="#parea5530" rel="#pinfo5530"><strong>Pandora Hearts</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5530&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 14%">8,954 members</div>
+					<div class="updatesBar" style="width: 20%; ">496 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">18</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1575/Code_Geass_-_Hangyaku_no_Lelouch" class="hoverinfo_trigger" id="#parea1575" rel="#pinfo1575"><img src="http://cdn.myanimelist.net/images/anime/12/14327t.jpg" width="50" border="0" hspace="2" alt="Code Geass - Hangyaku no Lelouch"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1575">
+	<div id="pinfo1575" rel="a1575" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1575/Code_Geass_-_Hangyaku_no_Lelouch" class="hoverinfo_trigger" id="#parea1575" rel="#pinfo1575"><strong>Code Geass - Hangyaku no Lelouch</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1575&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 77%">49,636 members</div>
+					<div class="updatesBar" style="width: 20%; ">491 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">19</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4181/Clannad_~After_Story~" class="hoverinfo_trigger" id="#parea4181" rel="#pinfo4181"><img src="http://cdn.myanimelist.net/images/anime/11/8907t.jpg" width="50" border="0" hspace="2" alt="Clannad ~After Story~"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4181">
+	<div id="pinfo4181" rel="a4181" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4181/Clannad_~After_Story~" class="hoverinfo_trigger" id="#parea4181" rel="#pinfo4181"><strong>Clannad ~After Story~</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4181&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 28%">18,203 members</div>
+					<div class="updatesBar" style="width: 20%; ">478 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">20</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4898/Kuroshitsuji" class="hoverinfo_trigger" id="#parea4898" rel="#pinfo4898"><img src="http://cdn.myanimelist.net/images/anime/6/10565t.jpg" width="50" border="0" hspace="2" alt="Kuroshitsuji"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4898">
+	<div id="pinfo4898" rel="a4898" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4898/Kuroshitsuji" class="hoverinfo_trigger" id="#parea4898" rel="#pinfo4898"><strong>Kuroshitsuji</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4898&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 25%">16,018 members</div>
+					<div class="updatesBar" style="width: 19%; ">452 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">21</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/20/Naruto" class="hoverinfo_trigger" id="#parea20" rel="#pinfo20"><img src="http://cdn.myanimelist.net/images/anime/8/4288t.jpg" width="50" border="0" hspace="2" alt="Naruto"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea20">
+	<div id="pinfo20" rel="a20" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/20/Naruto" class="hoverinfo_trigger" id="#parea20" rel="#pinfo20"><strong>Naruto</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=20&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 86%">55,965 members</div>
+					<div class="updatesBar" style="width: 18%; ">438 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">22</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1535/Death_Note" class="hoverinfo_trigger" id="#parea1535" rel="#pinfo1535"><img src="http://cdn.myanimelist.net/images/anime/9/9453t.jpg" width="50" border="0" hspace="2" alt="Death Note"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1535">
+	<div id="pinfo1535" rel="a1535" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1535/Death_Note" class="hoverinfo_trigger" id="#parea1535" rel="#pinfo1535"><strong>Death Note</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1535&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 100%">64,855 members</div>
+					<div class="updatesBar" style="width: 17%; ">424 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">23</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5682/Phantom_~Requiem_for_the_Phantom~" class="hoverinfo_trigger" id="#parea5682" rel="#pinfo5682"><img src="http://cdn.myanimelist.net/images/anime/7/12237t.jpg" width="50" border="0" hspace="2" alt="Phantom ~Requiem for the Phantom~"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5682">
+	<div id="pinfo5682" rel="a5682" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5682/Phantom_~Requiem_for_the_Phantom~" class="hoverinfo_trigger" id="#parea5682" rel="#pinfo5682"><strong>Phantom ~Requiem for the Phantom~</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5682&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 11%">7,273 members</div>
+					<div class="updatesBar" style="width: 17%; ">417 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">24</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5220/Shangri-La" class="hoverinfo_trigger" id="#parea5220" rel="#pinfo5220"><img src="http://cdn.myanimelist.net/images/anime/11/14078t.jpg" width="50" border="0" hspace="2" alt="Shangri-La"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5220">
+	<div id="pinfo5220" rel="a5220" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5220/Shangri-La" class="hoverinfo_trigger" id="#parea5220" rel="#pinfo5220"><strong>Shangri-La</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5220&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 11%">7,046 members</div>
+					<div class="updatesBar" style="width: 17%; ">414 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">25</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/121/Fullmetal_Alchemist" class="hoverinfo_trigger" id="#parea121" rel="#pinfo121"><img src="http://cdn.myanimelist.net/images/anime/5/9455t.jpg" width="50" border="0" hspace="2" alt="Fullmetal Alchemist"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea121">
+	<div id="pinfo121" rel="a121" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/121/Fullmetal_Alchemist" class="hoverinfo_trigger" id="#parea121" rel="#pinfo121"><strong>Fullmetal Alchemist</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=121&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 90%">58,407 members</div>
+					<div class="updatesBar" style="width: 16%; ">397 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">26</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4382/The_Melancholy_of_Haruhi_Suzumiya_2" class="hoverinfo_trigger" id="#parea4382" rel="#pinfo4382"><img src="http://cdn.myanimelist.net/images/anime/3/8310t.jpg" width="50" border="0" hspace="2" alt="The Melancholy of Haruhi Suzumiya 2"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4382">
+	<div id="pinfo4382" rel="a4382" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4382/The_Melancholy_of_Haruhi_Suzumiya_2" class="hoverinfo_trigger" id="#parea4382" rel="#pinfo4382"><strong>The Melancholy of Haruhi Suzumiya 2</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4382&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 22%">14,524 members</div>
+					<div class="updatesBar" style="width: 16%; ">388 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">27</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5258/Hajime_no_Ippo:_New_Challenger" class="hoverinfo_trigger" id="#parea5258" rel="#pinfo5258"><img src="http://cdn.myanimelist.net/images/anime/6/12847t.jpg" width="50" border="0" hspace="2" alt="Hajime no Ippo: New Challenger"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5258">
+	<div id="pinfo5258" rel="a5258" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5258/Hajime_no_Ippo:_New_Challenger" class="hoverinfo_trigger" id="#parea5258" rel="#pinfo5258"><strong>Hajime no Ippo: New Challenger</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5258&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 7%">4,520 members</div>
+					<div class="updatesBar" style="width: 15%; ">362 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">28</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/2025/Darker_than_BLACK" class="hoverinfo_trigger" id="#parea2025" rel="#pinfo2025"><img src="http://cdn.myanimelist.net/images/anime/13/6094t.jpg" width="50" border="0" hspace="2" alt="Darker than BLACK"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea2025">
+	<div id="pinfo2025" rel="a2025" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/2025/Darker_than_BLACK" class="hoverinfo_trigger" id="#parea2025" rel="#pinfo2025"><strong>Darker than BLACK</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=2025&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 44%">28,335 members</div>
+					<div class="updatesBar" style="width: 15%; ">359 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">29</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1887/Lucky_☆_Star" class="hoverinfo_trigger" id="#parea1887" rel="#pinfo1887"><img src="http://cdn.myanimelist.net/images/anime/2/4781t.jpg" width="50" border="0" hspace="2" alt="Lucky ☆ Star"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1887">
+	<div id="pinfo1887" rel="a1887" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1887/Lucky_☆_Star" class="hoverinfo_trigger" id="#parea1887" rel="#pinfo1887"><strong>Lucky ☆ Star</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1887&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 54%">35,252 members</div>
+					<div class="updatesBar" style="width: 14%; ">349 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">30</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/2001/Tengen_Toppa_Gurren_Lagann" class="hoverinfo_trigger" id="#parea2001" rel="#pinfo2001"><img src="http://cdn.myanimelist.net/images/anime/4/5123t.jpg" width="50" border="0" hspace="2" alt="Tengen Toppa Gurren Lagann"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea2001">
+	<div id="pinfo2001" rel="a2001" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/2001/Tengen_Toppa_Gurren_Lagann" class="hoverinfo_trigger" id="#parea2001" rel="#pinfo2001"><strong>Tengen Toppa Gurren Lagann</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=2001&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 56%">36,007 members</div>
+					<div class="updatesBar" style="width: 14%; ">347 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">31</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/853/Ouran_High_School_Host_Club" class="hoverinfo_trigger" id="#parea853" rel="#pinfo853"><img src="http://cdn.myanimelist.net/images/anime/13/5235t.jpg" width="50" border="0" hspace="2" alt="Ouran High School Host Club"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea853">
+	<div id="pinfo853" rel="a853" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/853/Ouran_High_School_Host_Club" class="hoverinfo_trigger" id="#parea853" rel="#pinfo853"><strong>Ouran High School Host Club</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=853&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 60%">38,668 members</div>
+					<div class="updatesBar" style="width: 14%; ">346 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">32</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/849/The_Melancholy_of_Haruhi_Suzumiya" class="hoverinfo_trigger" id="#parea849" rel="#pinfo849"><img src="http://cdn.myanimelist.net/images/anime/7/13491t.jpg" width="50" border="0" hspace="2" alt="The Melancholy of Haruhi Suzumiya"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea849">
+	<div id="pinfo849" rel="a849" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/849/The_Melancholy_of_Haruhi_Suzumiya" class="hoverinfo_trigger" id="#parea849" rel="#pinfo849"><strong>The Melancholy of Haruhi Suzumiya</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=849&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 75%">48,761 members</div>
+					<div class="updatesBar" style="width: 14%; ">342 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">33</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4186/Chrome_Shelled_Regios" class="hoverinfo_trigger" id="#parea4186" rel="#pinfo4186"><img src="http://cdn.myanimelist.net/images/anime/9/12238t.jpg" width="50" border="0" hspace="2" alt="Chrome Shelled Regios"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4186">
+	<div id="pinfo4186" rel="a4186" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4186/Chrome_Shelled_Regios" class="hoverinfo_trigger" id="#parea4186" rel="#pinfo4186"><strong>Chrome Shelled Regios</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4186&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 12%">7,946 members</div>
+					<div class="updatesBar" style="width: 14%; ">337 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">34</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/1482/D.Gray-man" class="hoverinfo_trigger" id="#parea1482" rel="#pinfo1482"><img src="http://cdn.myanimelist.net/images/anime/9/6731t.jpg" width="50" border="0" hspace="2" alt="D.Gray-man"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea1482">
+	<div id="pinfo1482" rel="a1482" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/1482/D.Gray-man" class="hoverinfo_trigger" id="#parea1482" rel="#pinfo1482"><strong>D.Gray-man</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=1482&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 45%">28,896 members</div>
+					<div class="updatesBar" style="width: 14%; ">337 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">35</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/2167/Clannad" class="hoverinfo_trigger" id="#parea2167" rel="#pinfo2167"><img src="http://cdn.myanimelist.net/images/anime/5/8499t.jpg" width="50" border="0" hspace="2" alt="Clannad"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea2167">
+	<div id="pinfo2167" rel="a2167" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/2167/Clannad" class="hoverinfo_trigger" id="#parea2167" rel="#pinfo2167"><strong>Clannad</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=2167&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 49%">31,677 members</div>
+					<div class="updatesBar" style="width: 14%; ">331 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">36</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/934/Higurashi_no_Naku_Koro_ni" class="hoverinfo_trigger" id="#parea934" rel="#pinfo934"><img src="http://cdn.myanimelist.net/images/anime/10/13181t.jpg" width="50" border="0" hspace="2" alt="Higurashi no Naku Koro ni"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea934">
+	<div id="pinfo934" rel="a934" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/934/Higurashi_no_Naku_Koro_ni" class="hoverinfo_trigger" id="#parea934" rel="#pinfo934"><strong>Higurashi no Naku Koro ni</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=934&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 47%">30,654 members</div>
+					<div class="updatesBar" style="width: 14%; ">328 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">37</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/237/Eureka_Seven" class="hoverinfo_trigger" id="#parea237" rel="#pinfo237"><img src="http://cdn.myanimelist.net/images/anime/7/14505t.jpg" width="50" border="0" hspace="2" alt="Eureka Seven"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea237">
+	<div id="pinfo237" rel="a237" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/237/Eureka_Seven" class="hoverinfo_trigger" id="#parea237" rel="#pinfo237"><strong>Eureka Seven</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=237&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 37%">24,188 members</div>
+					<div class="updatesBar" style="width: 13%; ">305 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">38</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/263/Hajime_no_Ippo" class="hoverinfo_trigger" id="#parea263" rel="#pinfo263"><img src="http://cdn.myanimelist.net/images/anime/10/2025t.jpg" width="50" border="0" hspace="2" alt="Hajime no Ippo"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea263">
+	<div id="pinfo263" rel="a263" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/263/Hajime_no_Ippo" class="hoverinfo_trigger" id="#parea263" rel="#pinfo263"><strong>Hajime no Ippo</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=263&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 16%">10,062 members</div>
+					<div class="updatesBar" style="width: 12%; ">282 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">39</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/6033/Dragon_Ball_Kai" class="hoverinfo_trigger" id="#parea6033" rel="#pinfo6033"><img src="http://cdn.myanimelist.net/images/anime/6/14065t.jpg" width="50" border="0" hspace="2" alt="Dragon Ball Kai"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea6033">
+	<div id="pinfo6033" rel="a6033" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/6033/Dragon_Ball_Kai" class="hoverinfo_trigger" id="#parea6033" rel="#pinfo6033"><strong>Dragon Ball Kai</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=6033&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 8%">5,257 members</div>
+					<div class="updatesBar" style="width: 12%; ">282 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">40</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5079/Kurokami" class="hoverinfo_trigger" id="#parea5079" rel="#pinfo5079"><img src="http://cdn.myanimelist.net/images/anime/6/13988t.jpg" width="50" border="0" hspace="2" alt="Kurokami"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5079">
+	<div id="pinfo5079" rel="a5079" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5079/Kurokami" class="hoverinfo_trigger" id="#parea5079" rel="#pinfo5079"><strong>Kurokami</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5079&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 15%">9,510 members</div>
+					<div class="updatesBar" style="width: 12%; ">279 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">41</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/2026/Hayate_the_Combat_Butler!" class="hoverinfo_trigger" id="#parea2026" rel="#pinfo2026"><img src="http://cdn.myanimelist.net/images/anime/1/2163t.jpg" width="50" border="0" hspace="2" alt="Hayate the Combat Butler!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea2026">
+	<div id="pinfo2026" rel="a2026" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/2026/Hayate_the_Combat_Butler!" class="hoverinfo_trigger" id="#parea2026" rel="#pinfo2026"><strong>Hayate the Combat Butler!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=2026&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 28%">18,336 members</div>
+					<div class="updatesBar" style="width: 11%; ">275 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">42</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/877/NANA" class="hoverinfo_trigger" id="#parea877" rel="#pinfo877"><img src="http://cdn.myanimelist.net/images/anime/2/11232t.jpg" width="50" border="0" hspace="2" alt="NANA"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea877">
+	<div id="pinfo877" rel="a877" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/877/NANA" class="hoverinfo_trigger" id="#parea877" rel="#pinfo877"><strong>NANA</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=877&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 26%">16,639 members</div>
+					<div class="updatesBar" style="width: 11%; ">273 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">43</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5675/Basquash!" class="hoverinfo_trigger" id="#parea5675" rel="#pinfo5675"><img src="http://cdn.myanimelist.net/images/anime/9/13680t.jpg" width="50" border="0" hspace="2" alt="Basquash!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5675">
+	<div id="pinfo5675" rel="a5675" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5675/Basquash!" class="hoverinfo_trigger" id="#parea5675" rel="#pinfo5675"><strong>Basquash!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5675&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 8%">4,894 members</div>
+					<div class="updatesBar" style="width: 11%; ">269 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">44</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5041/Guin_Saga" class="hoverinfo_trigger" id="#parea5041" rel="#pinfo5041"><img src="http://cdn.myanimelist.net/images/anime/11/14082t.jpg" width="50" border="0" hspace="2" alt="Guin Saga"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5041">
+	<div id="pinfo5041" rel="a5041" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5041/Guin_Saga" class="hoverinfo_trigger" id="#parea5041" rel="#pinfo5041"><strong>Guin Saga</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5041&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 6%">3,726 members</div>
+					<div class="updatesBar" style="width: 11%; ">267 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">45</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5342/Asura_Cryin" class="hoverinfo_trigger" id="#parea5342" rel="#pinfo5342"><img src="http://cdn.myanimelist.net/images/anime/9/14150t.jpg" width="50" border="0" hspace="2" alt="Asura Cryin'"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5342">
+	<div id="pinfo5342" rel="a5342" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5342/Asura_Cryin" class="hoverinfo_trigger" id="#parea5342" rel="#pinfo5342"><strong>Asura Cryin'</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5342&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 10%">6,554 members</div>
+					<div class="updatesBar" style="width: 11%; ">265 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">46</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/356/Fate/stay_night" class="hoverinfo_trigger" id="#parea356" rel="#pinfo356"><img src="http://cdn.myanimelist.net/images/anime/4/5900t.jpg" width="50" border="0" hspace="2" alt="Fate/stay night"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea356">
+	<div id="pinfo356" rel="a356" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/356/Fate/stay_night" class="hoverinfo_trigger" id="#parea356" rel="#pinfo356"><strong>Fate/stay night</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=356&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 52%">33,570 members</div>
+					<div class="updatesBar" style="width: 11%; ">260 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">47</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/30/Neon_Genesis_Evangelion" class="hoverinfo_trigger" id="#parea30" rel="#pinfo30"><img src="http://cdn.myanimelist.net/images/anime/7/9712t.jpg" width="50" border="0" hspace="2" alt="Neon Genesis Evangelion"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea30">
+	<div id="pinfo30" rel="a30" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/30/Neon_Genesis_Evangelion" class="hoverinfo_trigger" id="#parea30" rel="#pinfo30"><strong>Neon Genesis Evangelion</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=30&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 59%">38,317 members</div>
+					<div class="updatesBar" style="width: 11%; ">258 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">48</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/245/Great_Teacher_Onizuka" class="hoverinfo_trigger" id="#parea245" rel="#pinfo245"><img src="http://cdn.myanimelist.net/images/anime/13/11460t.jpg" width="50" border="0" hspace="2" alt="Great Teacher Onizuka"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea245">
+	<div id="pinfo245" rel="a245" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/245/Great_Teacher_Onizuka" class="hoverinfo_trigger" id="#parea245" rel="#pinfo245"><strong>Great Teacher Onizuka</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=245&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 37%">24,163 members</div>
+					<div class="updatesBar" style="width: 11%; ">257 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">49</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/4722/Skip_Beat!" class="hoverinfo_trigger" id="#parea4722" rel="#pinfo4722"><img src="http://cdn.myanimelist.net/images/anime/4/11912t.jpg" width="50" border="0" hspace="2" alt="Skip Beat!"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea4722">
+	<div id="pinfo4722" rel="a4722" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/4722/Skip_Beat!" class="hoverinfo_trigger" id="#parea4722" rel="#pinfo4722"><strong>Skip Beat!</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=4722&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 17%">10,898 members</div>
+					<div class="updatesBar" style="width: 11%; ">255 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="borderClass" style="border-width: 0 0 1px 0;" align="center" valign="top" width="30"><span style="font-weight: bold; font-size: 24px;" class="lightLink">50</span></td>
+				<td width="60" align="center" valign="top" style="padding-bottom: 5px;"><div class="picSurround"><a href="http://myanimelist.net/anime/5307/Sora_wo_Kakeru_Shoujo" class="hoverinfo_trigger" id="#parea5307" rel="#pinfo5307"><img src="http://cdn.myanimelist.net/images/anime/11/11798t.jpg" width="50" border="0" hspace="2" alt="Sora wo Kakeru Shoujo"></a></div></td> 
+				<td class="borderClass" style="border-width: 0 0 1px 0;" valign="top">
+				
+					
+	<div id="parea5307">
+	<div id="pinfo5307" rel="a5307" class="hoverinfo">
+	</div>
+	</div>
+	
+					<a href="http://myanimelist.net/anime/5307/Sora_wo_Kakeru_Shoujo" class="hoverinfo_trigger" id="#parea5307" rel="#pinfo5307"><strong>Sora wo Kakeru Shoujo</strong></a> <a href="http://myanimelist.net/panel.php?keepThis=true&go=add&selected_series_id=5307&hidenav=1&hideheader=1&TB_iframe=true&height=420&width=790" title="Quick add anime to my list" class="thickbox button_add">add</a>  <span class="lightLink"><small>Airing</small></span>
+					
+					<div class="spaceit">
+					<div class="membersBar" style="width: 7%">4,439 members</div>
+					<div class="updatesBar" style="width: 10%; ">254 episodes watched</div>
+					</div>
+				
+				</td>
+			</tr>
+			</tr></table>
+	</div>
+</div>
+
+<div id="rightcontentunder">
+
+<a href="http://myanimelist.net/modules.php?go=faq">FAQ</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/about.php">About</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/donations.php">Donate</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/about.php?go=contact">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/tou.php">Terms</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/privacy.php">Privacy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://myanimelist.net/modules.php?go=affiliates">Affiliates</a>
+	
+<div id="copyright">MyAnimeList.net, a property of CraveOnline Media LLC, a division of AtomicOnline, LLC.<br>
+&copy; 2009 CraveOnline Media, LLC. All Rights Reserved.</div>
+
+	<div id="nav_ad_div"></div>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#nav_ad_div').append('<div id="adNavHide"><iframe src="http://myanimelist.net/includes/ads/nav.html" border="0" height="758" width="160" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>');
+		$('#adNavHide').appendTo('#adNav');
+	});
+	</script>
+	
+</div>
+</div>
+
+<!-- end rightbody -->
+</div>
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-369102-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body>
+</html>
+

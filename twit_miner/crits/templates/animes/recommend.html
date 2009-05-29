@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load pyif %}
+{% block content %}
+    {% pyif len(objects) == 0 %}
+        <p>Sorry, we don't have any suggestions for you :(</p>
+    {% else %}
+        <p>You might like one of those movies:</p>
+        <ul>
+        {% for anime in objects %} 
+          <li>
+            <div>
+              <span class="anime_image"></span>
+              <span class="anime_name">{{anime.name}}</span>
+            </div>
+          </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <p style="clear:both;padding-top:10px;">
+      <a href="{% url types "animes" %}">Back</a>
+    </p>
+    <script type="text/javascript">
+      $('li span.anime_image').wikiImagify({
+        name: function(elem) {
+          return $(elem).next('.anime_name').text()
+        },
+        google_query: function(title) {
+          return title + ' site:myanimelist.net';
+        }
+      })
+    </script>
+{% endblock %}
