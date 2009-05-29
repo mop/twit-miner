@@ -1,23 +1,23 @@
 <html>
     <head>
       <title>What's being watched on Twitter?</title>
-      <link href="{% url static serve %}style.css" type="text/css" 
+      <link href="{% url public "style.css" %}" type="text/css" 
       rel="stylesheet" />
       <script type="text/javascript" 
-        src="{% url static serve %}jquery-1.3.2.min.js">
+          src="{% url public "jquery-1.3.2.min.js" %}">
       </script>
       <script type="text/javascript" 
-        src="{% url static serve %}application.js">
+          src="{% url public "application.js" %}">
       </script>
       <script type="text/javascript" 
-        src="{% url static serve %}jquery.qtip-1.0.0-rc3.min.js">
+          src="{% url public "jquery.qtip-1.0.0-rc3.min.js" %}">
       </script>
     </head>
     <body>
       <div id="doc">
         <div id="header">
-          <img src="/public/images/twit-miner-logo.png" alt="logo" />
-          <img src="/public/images/twit-miner-text.png" alt="logo-text" />
+          <img src="{% url public "images/twit-miner-logo.png" %}" alt="logo" />
+          <img src="{% url public "images/twit-miner-text.png" %}" alt="logo-text" />
           <span>What do people on Twitter like?</span>
         </div>
         <div id="content">

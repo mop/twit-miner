@@ -4,7 +4,7 @@
     var titles = $(elems).map(function() { 
       return options.wiki_title(options.name($(this)));
     });
-    var url = '/wiki/';
+    var url = '/twit-miner/wiki/';
     jQuery.getJSON(url, { 'titles': jQuery.makeArray(titles) }, 
       function(json) {
 

@@ -9,6 +9,7 @@ import operator
 from django.test import Client
 from django.test import TestCase
 from django.test.utils import setup_test_environment, teardown_test_environment
+from django.core.urlresolvers import reverse
 
 from crits.utils import clear_cache
 
@@ -24,7 +25,9 @@ class MovieIndexListTest(TestCase):
                 name='Movie%d' % i
             )
 
-        self.response = self.client.get('/movies/')
+        self.response = self.client.get(
+            reverse('types', args=['movies'])
+        )
 
     def tearDown(self):
         teardown_test_environment()
@@ -50,7 +53,8 @@ class SingleMovieRecommendTest(TestCase):
         models.Trackable.recommend = self.mock
         self.mock.return_value = [self.movie]
 
-        self.response = self.client.get('/movies/recommend', { 
+        self.response = self.client.get(
+            reverse('types_recommend', args=['movies']), { 
             'movies': 'Testmovie'
         })
     
@@ -83,7 +87,8 @@ class MultipleMovieListTest(TestCase):
         models.Trackable.recommend = self.mock
         self.mock.return_value = [self.movie]
 
-        self.response = self.client.get('/movies/recommend', { 
+        self.response = self.client.get(
+            reverse('types_recommend', args=['movies']), { 
             'movies': 'Testmovie, Testmovie2,Testmovie3    , Testmovie4'
         })
     
@@ -113,7 +118,9 @@ class ViewRankingGenericTest(TestCase):
         models.Trackable.ranking_by_type = self.mock
 
         self.responses = map(
-            lambda a: self.client.get('/%s/' % a[0]),
+            lambda a: self.client.get(
+                reverse('types', args=[a[0]])
+            ),
             TEST_TYPES
         )
         
@@ -177,7 +184,9 @@ class WikiFetcherTest(TestCase):
             '<p>A paragraph which should be {}"escaped\'</p>'
 
         self.title  = urllib.quote('Angels & Demons')
-        self.response = self.client.get('/wiki/%s' % self.title)
+        self.response = self.client.get(
+            reverse('wiki', args=[self.title])
+        )
 
     def tearDown(self):
         wiki_fetcher.fetch = self.old_fetcher
@@ -211,7 +220,7 @@ class MultiWikiFetcher(TestCase):
         self.mock.return_value = \
             '<p>A paragraph which should be {}"escaped\'</p>'
 
-        self.response = self.client.get('/wiki/', {
+        self.response = self.client.get(reverse('wiki', args=["/"]), {
             'titles': ['Angels & Demons', 'Another']
         })
 
