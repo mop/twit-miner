@@ -61,4 +61,5 @@ models.User.objects.filter(id__in=ids).delete()
 
 for type in FEED_LISTS:
     cache.set('%s_svd' % type, None)
+    cache.set('%s_maps' % type, None)
     models.Trackable.recommend(type, []) # refill cache

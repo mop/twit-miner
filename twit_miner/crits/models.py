@@ -5,6 +5,7 @@ import itertools
 from operator import itemgetter
 from django.core.cache import cache
 
+CACHING_TIME = 3600 * 10
 # Create your models here.
 
 class RankingManager(models.Manager):
@@ -32,12 +33,10 @@ class Trackable(models.Model):
         return self.ranking.filter(type=type)[0:20]
 
     @classmethod
-    def tuples_to_vector(cls, tuples):
-        num_trackables = Trackable.objects.order_by('-id')[0].id
-
-        result = [0] * num_trackables
+    def tuples_to_vector(cls, type, trackable_maps, tuples):
+        result = [0] * len(trackable_maps[0])
         for id, score in tuples:
-            result[id - 1] = score
+            result[trackable_maps[1][id]] = score
         return result
 
     @classmethod
@@ -67,18 +66,24 @@ class Trackable(models.Model):
 
     @classmethod
     def compute_distances(cls, vec, matrix):
+        vec_norm = linalg.norm(vec)
         return map(
-            lambda i: cls.cdist(vec, matrix[i,:].transpose()),
+            lambda i: cls.cdist(
+                vec,
+                matrix[i,:].transpose(),
+                vec_norm=vec_norm
+            ),
             xrange(matrix.shape[0])
         )
 
     @classmethod
-    def cdist(cls, u, v):
-        return np.dot(u, v)[0,0] / (linalg.norm(u) * linalg.norm(v))
+    def cdist(cls, u, v, vec_norm=None):
+        vec_norm = vec_norm or linalg.norm(v)
+        return np.dot(u, v)[0,0] / (vec_norm * linalg.norm(v))
 
     @classmethod
-    def reviews_for_users(cls, type):
-        num_trackables = Trackable.objects.order_by('-id')[0].id
+    def reviews_for_users(cls, type, trackable_maps):
+        num_trackables = len(trackable_maps[0])
         num_users      = User.objects.order_by('-id')[0].id
         matrix         = map(lambda a: [0] * num_trackables, xrange(num_users))
         
@@ -92,17 +97,33 @@ class Trackable(models.Model):
             where t.type = %s
         ''', [type]).fetchall()
         for (uid, tid, score) in result:
-            matrix[uid - 1][tid - 1] = score
+            matrix[uid - 1][trackable_maps[1][tid]] = score
         return matrix
 
     @classmethod
+    def build_trackable_maps(cls, type):
+        objects = Trackable.objects.filter(type=type).values('id')
+        id_to_tid = map(itemgetter('id'), objects)
+        tid_to_id = {}
+        for i, tid in enumerate(id_to_tid):
+            tid_to_id[tid] = i
+        return (id_to_tid, tid_to_id)
+
+    @classmethod
     def recommend(cls, type, objects):
+        trackable_maps = cache.get("%s_maps" % type)
+        if trackable_maps is None:
+            trackable_maps = cls.build_trackable_maps(type)
+            cache.set("%s_maps" % type, trackable_maps, CACHING_TIME)
+
         query_vector = cls.tuples_to_vector(
+            type,
+            trackable_maps,
             cls.vector_for_query(type, objects)
         )
         usv_matrix = cache.get('%s_svd' % type)
         if usv_matrix is None:
-            review_vectors = cls.reviews_for_users(type)
+            review_vectors = cls.reviews_for_users(type, trackable_maps)
             #       movie1 movie2 ...
             # user1      0      1
             # user2      1      0
@@ -113,13 +134,15 @@ class Trackable(models.Model):
         
             u, s, v = linalg.svd(matrix)
             usv_matrix = (u, s, v, matrix)
-            cache.set('%s_svd' % type, usv_matrix, 3600*10)
+            cache.set('%s_svd' % type, usv_matrix, CACHING_TIME)
         u, s, v, matrix = usv_matrix
         user_sim = cls.lsi(u, s, v, query_vector)
-        return cls.fetch_trackables(matrix, user_sim, query_vector)
+        return cls.fetch_trackables(
+            matrix, user_sim, query_vector, trackable_maps
+        )
 
     @classmethod
-    def fetch_trackables(cls, matrix, user_sim, query_vector):
+    def fetch_trackables(cls, matrix, user_sim, query_vector, trackable_maps):
         result = []
         user_sim = filter(lambda a: a[0] > 0.90, user_sim)
         for cos, id in user_sim:
@@ -134,7 +157,7 @@ class Trackable(models.Model):
         )
         results.sort(key=itemgetter(0)) # restore order
         results = map(itemgetter(1), results)
-        id_list = map(lambda a: a + 1, result)
+        id_list = map(lambda a: trackable_maps[0][a], result)
         return Trackable.objects.filter(id__in=id_list)
 
 
