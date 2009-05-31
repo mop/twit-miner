@@ -9,8 +9,9 @@
         {% for movie in objects %} 
           <li>
             <div>
-              <span class="movie_image"></span>
-              <span class="movie_name">{{movie.name}}</span>
+              <span class="image"></span>
+              <span class="name">{{movie.name}}</span><br/>
+              <span class="score">Score: {{movie.score}}</span>
             </div>
           </li>
         {% endfor %}
@@ -21,9 +22,9 @@
     </p>
     <script type="text/javascript">
     $(document).ready(function(e) {
-       $('li span.movie_image').wikiImagify({
+       $('li span.image').wikiImagify({
          name: function(elem) {
-           return $(elem).next('.movie_name').text()
+           return $(elem).next('.name').text();
          },
          wiki_title: function(title) {
            return title + ' (film)';

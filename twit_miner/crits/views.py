@@ -1,5 +1,6 @@
 import models
 import wiki_fetcher
+import picture_fetcher
 import simplejson
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -26,16 +27,26 @@ def type_recommend(request, type):
     })
 
 # Create your views here.
-def movies_index(request):
-    objects = models.Trackable.ranking_by_type('movie')
-    return render_to_response('movies/index.html', {
-        'movies': objects,
-    })
-
-def movies_recommend(request):
-    movie_list = map(unicode.strip, request.GET['movies'].split(','))
-    results = models.Trackable.recommend('movie', movie_list)
-    return render_to_response('movies/recommend.html', { 'objects': results })
+#def movies_index(request):
+#    objects = models.Trackable.ranking_by_type('movie')
+#    return render_to_response('movies/index.html', {
+#        'movies': objects,
+#    })
+#
+#def movies_recommend(request):
+#    movie_list = map(unicode.strip, request.GET['movies'].split(','))
+#    results = models.Trackable.recommend('movie', movie_list)
+#    return render_to_response('movies/recommend.html', { 'objects': results })
+#
+def pics(request, query):
+    query_list = []
+    if 'queries' in request.GET:
+        query_list = request.GET.getlist('queries')
+    else:
+        query_list = [query]
+    result_dict = dict(map(_cached_thumbnail_fetch, query_list))
+    json = simplejson.dumps({'result': result_dict})
+    return HttpResponse(json, mimetype='application/json')
 
 def wiki(request, page):
     query_list = []
@@ -52,4 +63,11 @@ def _cached_wiki_fetch(title):
     if not result:
         result = wiki_fetcher.fetch(title)
         cache.set('_wiki_%s' % title, result, 3600 * 5)
+    return (title, result)
+
+def _cached_thumbnail_fetch(title):
+    result = cache.get('_pics_%s' % title)
+    if not result:
+        result = picture_fetcher.download_thumbnail(title)
+        cache.set('_pics_%s' % title, result, 3600 * 5)
     return (title, result)

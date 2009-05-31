@@ -7,11 +7,15 @@ body {
   width: 100%;
 }
 
-.movie_image a {
+.image a {
   float: left;
 }
 
-.movie_image img {
+.image {
+  float: left;
+}
+
+.image img {
   border: 0px;
   float: left;
 }
@@ -19,6 +23,41 @@ body {
 .anime_image a {
   float: left;
 }
+
+#recommend_form input.query_box {
+  width: 700px;
+  height: 30px;
+  font-size: 150%;
+  color: #333;
+  float: left;
+}
+
+#recommend_form .input_help {
+  font-size: 80%;
+}
+
+#recommend_form label {
+  display: none;
+  clear: both;
+}
+form#recommend_form {
+  margin-top: -12px;
+  float: left;
+}
+
+form#recommend_form :after {
+  clear: both;
+}
+
+#recommend_form input.submit {
+  float: right;
+}
+
+.input_help {
+  clear: both;
+  float: left;
+}
+
 
 .anime_image img {
   border: 0px;
@@ -70,6 +109,10 @@ div#content, div#footer {
   text-align: justify:
 }
 
+div#content {
+  margin-top: 10px;
+}
+
 div#content label {
   margin-left: 5px;
 }
@@ -84,6 +127,8 @@ table {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  color: black;
+  font-size: 180%;
 }
 
 a {
@@ -102,6 +147,17 @@ table td span {
   top: 50%;
 }
 
+table .score {
+  font-size: 60%;
+  float: left;
+}
+
+table td {
+  border-top: 1px dashed #CCC;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
 li div {
   display: inline-table;
   vertical-align: middle;
@@ -118,21 +174,19 @@ li span {
   float: left;
 }
 
-li span.movie_name {
+li span.name {
   font-weight: bold;
   font-size: 120%;
+  height: auto;
 }
 
-span.movie_image {
-  width: 150px;
+li span.score {
+  font-size: 60%;
+  margin-top: 5px;
 }
 
-li span.anime_name {
-  font-weight: bold;
-  font-size: 120%;
+span.image {
+  width: 80px;
 }
 
-span.anime_image {
-  width: 150px;
-}
 

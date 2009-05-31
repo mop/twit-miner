@@ -9,8 +9,9 @@
         {% for anime in objects %} 
           <li>
             <div>
-              <span class="anime_image"></span>
-              <span class="anime_name">{{anime.name}}</span>
+              <span class="image"></span>
+              <span class="name">{{anime.name}}</span><br/>
+              <span class="score">Score: {{anime.score}}</span>
             </div>
           </li>
         {% endfor %}
@@ -20,9 +21,9 @@
       <a href="{% url types "animes" %}">Back</a>
     </p>
     <script type="text/javascript">
-      $('li span.anime_image').wikiImagify({
+      $('li span.image').wikiImagify({
         name: function(elem) {
-          return $(elem).next('.anime_name').text()
+          return $(elem).next('.name').text()
         },
         google_query: function(title) {
           return title + ' site:myanimelist.net';

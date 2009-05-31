@@ -2,9 +2,9 @@
 {% block content %}
     <script>
     $(document).ready(function(e) {
-       $('.anime_top .anime_image').wikiImagify({
+       $('.anime_top .image').wikiImagify({
          name: function(elem) {
-           return $(elem).next('.anime_name').text()
+           return $(elem).next('.name').text()
          },
          google_query: function(title) {
            return title + ' site:myanimelist.net';
@@ -13,15 +13,16 @@
     });
     </script>
 <h2>What animes do you like?</h2>
-<form action="{% url types_recommend "animes" %}" method="get">
+<form action="{% url types_recommend "animes" %}" method="get"
+  id="recommend_form">
   <p>
   <label for="anime_text">Animes: </label>
+  <input type="text" name="animes" class="query_box" id="anime_text" />
   <span class="input_help">(separated by ',')</span>
-  <input type="text" name="animes" id="anime_text" />
-  <input type="submit" value="Suggest Movies!" />
+  <input class="submit" type="submit" value="Suggest Movies!" />
   </p>
 </form>
-<h2>What animes do people like on Twitter?</h2>
+<h2>What's hot on Twitter?</h2>
 <table class="anime_top">
     {% for anime in animes %}
         {% include 'animes/anime.partial.html' %}

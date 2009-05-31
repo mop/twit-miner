@@ -4,7 +4,7 @@
     var titles = $(elems).map(function() { 
       return options.wiki_title(options.name($(this)));
     });
-    var url = '/twit-miner/wiki/';
+    var url = options.wiki_url;
     jQuery.getJSON(url, { 'titles': jQuery.makeArray(titles) }, 
       function(json) {
 
@@ -32,27 +32,29 @@
     var defaults = {
       name: function(e) { return 'a sample name'; },
       wiki_title: function(title) { return title; },
-      google_query: function(title) { return title; }
+      google_query: function(title) { return title; },
+      wiki_url: '/twit-miner/wiki/',
+      pics_url: '/twit-miner/pics/'
     };
     var options = $.extend(defaults, options);
 
-    $(this).each(function() {
-      var query = encodeURIComponent(
-        options.google_query(options.name($(this)))
-      );
-      var url =
-        'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=';
-      url += query + '&callback=?';
-      var image = $(this);
-      jQuery.getJSON(url, null, function(e) {
-        if (e.responseStatus != 200) return;
-        var result_url = e.responseData.results[0].tbUrl;
-        $(image).append('<img src="' + result_url + '" />');
-        //fetch_wiki($(image), options);
-        var name = options.wiki_title(options.name($(image)));
-        $(image).children('img').wrap(
-            '<a href="http://en.wikipedia.org/wiki/' + name + '"></a>'
-        )
+    var elems = $(this);
+    var titles = $(this).map(function() {
+      return options.google_query(options.name($(this)));
+    });
+    var url = options.pics_url;
+    jQuery.getJSON(url, { 'queries': jQuery.makeArray(titles) }, 
+      function(json) {
+
+      $(elems).each(function() {
+        var name = options.google_query(options.name($(this)));
+        var img = json.result[name];
+        $(this).append('<img src="' + img + '" />');
+        var wiki_name = options.wiki_title(options.name($(this)));
+        $(this).children('img').wrap(
+            '<a href="http://en.wikipedia.org/wiki/' + 
+            wiki_name + '"></a>'
+        );
       });
     });
     return fetch_wiki($(this), options);

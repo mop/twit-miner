@@ -2,9 +2,9 @@
 {% block content %}
     <script>
     $(document).ready(function(e) {
-       $('.movies_top .movie_image').wikiImagify({
+       $('.movies_top .image').wikiImagify({
          name: function(elem) {
-           return $(elem).next('.movie_name').text()
+           return $(elem).next('.name').text()
          },
          wiki_title: function(title) {
            return title + ' (film)';
@@ -16,15 +16,16 @@
     });
     </script>
 <h2>What movies do you like?</h2>
-<form action="{% url types_recommend "movies" %}" method="get">
+<form action="{% url types_recommend "movies" %}" method="get"
+  id="recommend_form">
   <p>
   <label for="movie_text">Movies: </label>
+  <input class="query_box" type="text" name="movies" id="movie_text" />
   <span class="input_help">(separated by ',')</span>
-  <input type="text" name="movies" id="movie_text" />
-  <input type="submit" value="Suggest Movies!" />
+  <input class="submit" type="submit" id="movie_submit" value="Suggest Movies!" />
   </p>
 </form>
-<h2>What movies do people like on Twitter?</h2>
+<h2>What's hot on Twitter?</h2>
 <table class="movies_top">
     {% for movie in movies %}
         {% include 'movies/movie.partial.html' %}

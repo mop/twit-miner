@@ -5,6 +5,7 @@ import crits.wiki_fetcher as wiki_fetcher
 import urllib
 import simplejson
 import operator
+import crits.picture_fetcher as picture_fetcher
 
 from django.test import Client
 from django.test import TestCase
@@ -246,3 +247,77 @@ class MultiWikiFetcher(TestCase):
 
     def test_should_call_wiki_fetcher_with_another(self):
         self.assertCalledWith(self.mock, u'Another')
+
+class AbstractPictureFetcher(TestCase):
+    def setUp(self):
+        setup_test_environment()
+        
+        clear_cache()
+
+        self.download_mock = Mock()
+        self.download_mock.return_value = 'the url'
+        self.old_downloader = picture_fetcher.download_thumbnail
+        picture_fetcher.download_thumbnail = self.download_mock
+
+    def tearDown(self):
+        picture_fetcher.download_thumbnail = self.old_downloader
+        teardown_test_environment()
+
+    def assertCalledWith(self, mock, param, num=1):
+        call_list = mock.call_args_list
+        self.assertEqual(
+            len(filter(lambda a: a[0][0] == param, call_list)), num
+        )
+
+class MultiPictureFetcher(AbstractPictureFetcher):
+    def setUp(self):
+        super(MultiPictureFetcher, self).setUp()
+
+        self.response = self.client.get(
+            reverse('pictures', args=('/',)), {
+                'queries': [ 'Image 1', 'Image 2' ]
+        })
+
+    def tearDown(self):
+        super(MultiPictureFetcher, self).tearDown()
+        
+    def test_should_be_successful(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_should_call_download_thumbnail_for_image_1(self):
+        self.assertCalledWith(self.download_mock, u'Image 1')
+    
+    def test_should_call_download_thumbnail_for_image_2(self):
+        self.assertCalledWith(self.download_mock, u'Image 2')
+
+    def test_should_return_json_response(self):
+        json = simplejson.loads(unicode(self.response.content))
+        self.assertTrue('result' in json)
+        self.assertEqual(json['result'], {
+            'Image 1': 'the url',
+            'Image 2': 'the url'
+        })
+
+        
+class SinglePictureFetcher(AbstractPictureFetcher):
+    def setUp(self):
+        super(SinglePictureFetcher, self).setUp()
+        self.response = self.client.get(
+            reverse('pictures', args=('Image 1',))
+        )
+
+    def tearDown(self):
+        super(SinglePictureFetcher, self).tearDown()
+
+    def test_should_be_successful(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_should_return_json_response(self):
+        json = simplejson.loads(unicode(self.response.content))
+        self.assertTrue('result' in json)
+        self.assertEqual(json['result'], {
+            'Image 1': 'the url'
+        })
+
+    def test_should_call_download_thumbnail_for_image1(self):
+        self.assertCalledWith(self.download_mock, u'Image 1')

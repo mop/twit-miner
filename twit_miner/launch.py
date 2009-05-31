@@ -37,11 +37,13 @@ results = p.map(twitlib.fetch_trackable, trackables)
 results = zip(results, trackables)
 for result, trackable in results:
     twitlib.create_data(trackable, result['results'])
+del results
 
-users   = models.User.objects.order_by('last_id')[0:50]
+users   = models.User.objects.order_by('last_id')[0:10]
 results = p.map(twitlib.fetch_user, users)
 for result, user in zip(results, users):
     twitlib.create_user_data(user, trackables, result)
+del results
     
 # prune users
 cur = connection.cursor()
