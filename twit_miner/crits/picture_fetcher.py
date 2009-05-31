@@ -14,9 +14,9 @@ from django.core.urlresolvers import reverse
 thumbnail_size = (75, 75)
 
 def fetch_query(query, urllib=urllib2):
-    url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s' % (
-        u.quote(query)
-    )
+    url = \
+    'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%s' \
+        % (u.quote(query))
     result = urllib.urlopen(url)
     return simplejson.loads(result.read())
 
@@ -29,6 +29,11 @@ def fetch_image(url, urllib=urllib2, image_class=Image):
         print e
         return None
 
+# NOTE:
+# This function was copied from reddit's source-code:
+# http://code.reddit.com
+# and is licenced under the CPAL-Licence: 
+# http://code.reddit.com/LICENSE
 def image_entropy(img):
     """calculate the entropy of an image"""
     hist = img.histogram()
@@ -37,6 +42,11 @@ def image_entropy(img):
 
     return -sum([p * math.log(p, 2) for p in hist if p != 0])
 
+# NOTE:
+# This function was copied and modified from reddit's source-code:
+# http://code.reddit.com
+# and is licenced under the CPAL-Licence: 
+# http://code.reddit.com/LICENSE
 def square_y(img):
     """if the image is taller than it is wide, square it off. determine
     which pieces to cut off based on the entropy pieces."""
@@ -57,6 +67,11 @@ def square_y(img):
         x,y = img.size
     return img
 
+# NOTE:
+# This function was copied and modified from reddit's source-code:
+# http://code.reddit.com
+# and is licenced under the CPAL-Licence: 
+# http://code.reddit.com/LICENSE
 def square_x(img):
     x,y = img.size
     while x > y:
@@ -75,6 +90,11 @@ def square_x(img):
         x,y = img.size
     return img
 
+# NOTE:
+# This function was copied and modified from reddit's source-code:
+# http://code.reddit.com
+# and is licenced under the CPAL-Licence: 
+# http://code.reddit.com/LICENSE
 def square_image(img):
     """if the image is taller than it is wide, square it off. determine
     which pieces to cut off based on the entropy pieces."""
@@ -84,7 +104,6 @@ def square_image(img):
     elif x > y:
         return square_x(img)
     return img
-
     
 def resize_image(image, image_class=Image):
     image = square_image(image)
