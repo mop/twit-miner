@@ -1,3 +1,5 @@
 *.pyc
 *.swp
 fabfile.py
+db.sqlite3
+testing.sqlite3

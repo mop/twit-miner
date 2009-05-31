@@ -44,3 +44,4 @@ There are a lot of dependencies for running twit-miner:
 * [multiprocessing](http://code.google.com/p/python-multiprocessing/) Only needed if you are running on Python 2.5, since 2.6 has it already included.
 * [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
 * [feedparser](http://www.feedparser.org/)
+* [pil](http://www.pythonware.com/products/pil/)
