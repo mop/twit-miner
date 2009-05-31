@@ -20,6 +20,24 @@
           <img src="{% url public "images/twit-miner-text.png" %}" alt="logo-text" />
           <span>What do people on Twitter like?</span>
         </div>
+        <div id="menu">
+            <ul>
+                {% ifequal type "movies" %}
+                <li class="selected">
+                {% else %}
+                <li>
+                {% endifequal %}
+                    <a href="{% url types "movies" %}">Movies</a>
+                </li>
+                {% ifequal type "animes" %}
+                <li class="selected">
+                {% else %}
+                <li>
+                {% endifequal %}
+                    <a href="{% url types "animes" %}">Animes</a>
+                </li>
+            </ul>
+        </div>
         <div id="content">
           {% block content %}
           {% endblock %}

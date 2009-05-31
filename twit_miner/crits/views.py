@@ -17,27 +17,17 @@ def type_index(request, type):
     objects = models.Trackable.ranking_by_type(SINGULAR_DICT[type])
     return render_to_response('%s/index.html' % type, {
         type: objects,
+        'type': type 
     })
 
 def type_recommend(request, type):
     obj_list = map(unicode.strip, request.GET[type].split(','))
     results = models.Trackable.recommend(SINGULAR_DICT[type], obj_list)
     return render_to_response('%s/recommend.html' % type, { 
-        'objects': results 
+        'objects': results,
+        'type': type 
     })
 
-# Create your views here.
-#def movies_index(request):
-#    objects = models.Trackable.ranking_by_type('movie')
-#    return render_to_response('movies/index.html', {
-#        'movies': objects,
-#    })
-#
-#def movies_recommend(request):
-#    movie_list = map(unicode.strip, request.GET['movies'].split(','))
-#    results = models.Trackable.recommend('movie', movie_list)
-#    return render_to_response('movies/recommend.html', { 'objects': results })
-#
 def pics(request, query):
     query_list = []
     if 'queries' in request.GET:

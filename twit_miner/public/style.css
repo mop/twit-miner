@@ -7,6 +7,48 @@ body {
   width: 100%;
 }
 
+div#menu {
+    clear: both;
+    width: 700px;
+    float: left;
+}
+
+#menu ul {
+    width: 700px;
+    margin: 0px;
+    margin-top: 5px;
+    list-style: none;
+    float: left;
+    padding: 0px;
+}
+
+#menu ul li {
+    clear: none;
+    float: left;
+    margin-right: 5px;
+    background-color: #2D9B27;
+    padding: 5px;
+}
+
+#menu ul li a:hover {
+    text-decoration: none;
+}
+
+#menu ul li a {
+    color: white;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+#menu ul li.selected a {
+  color: #078600;
+  font-weight: bold;
+}
+
+#menu ul li.selected {
+    background-color: white;
+}
+
 .image a {
   float: left;
 }
@@ -40,6 +82,7 @@ body {
   display: none;
   clear: both;
 }
+
 form#recommend_form {
   margin-top: -12px;
   float: left;
@@ -107,10 +150,6 @@ div#content, div#footer {
   padding: 10px;
 
   text-align: justify:
-}
-
-div#content {
-  margin-top: 10px;
 }
 
 div#content label {
