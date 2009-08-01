@@ -228,4 +228,12 @@ span.image {
   width: 80px;
 }
 
+table.anime_top, table.movies_top {
+  width: 55%;
+}
+
+table.anime_normal, table.movies_normal {
+  width: 35%;
+}
+
 
